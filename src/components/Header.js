@@ -1,42 +1,89 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/cyberpunk-header.css';
-import { Link } from "react-scroll";
+import { Link } from 'react-scroll';
+import { gsap } from 'gsap';
 
 const Header = () => {
-  return (
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  
+    const maxHeight = isOpen ? '0' : '300px';
+    gsap.to('nav ul', {
+      maxHeight,
+      duration: 0.4,
+      ease: 'power2.out',
+    });
+  };
+  
+  
+  return (
     <header className="cyberpunk-header">
       <div className="container">
         <h1 className="glitch-text">Sunehildeep Singh</h1>
-        <nav>
+        <nav className={isOpen ? 'open' : ''}>
+          <div className="menu-toggle" onClick={toggleMenu}>
+            <div className="hamburger"></div>
+          </div>
           <ul>
             <li>
-              <Link to="about" smooth={true} duration={500} offset={-100}>
+              <Link
+                to="about"
+                smooth={true}
+                duration={500}
+                offset={-100}
+                onClick={toggleMenu}
+              >
                 About
               </Link>
             </li>
             <li>
-              <Link to="goal" smooth={true} duration={500} offset={-100}>
+              <Link
+                to="goal"
+                smooth={true}
+                duration={500}
+                offset={-100}
+                onClick={toggleMenu}
+              >
                 Goal
               </Link>
             </li>
             <li>
-              <Link to="projects" smooth={true} duration={500} offset={-120}>
+              <Link
+                to="projects"
+                smooth={true}
+                duration={500}
+                offset={-120}
+                onClick={toggleMenu}
+              >
                 Projects
               </Link>
             </li>
             <li>
-              <a href="https://github.com/Sunehildeep">
+              <a href="https://github.com/Sunehildeep" onClick={toggleMenu}>
                 GitHub
               </a>
             </li>
             <li>
-              <Link to="skills" smooth={true} duration={500} offset={-100}>
+              <Link
+                to="skills"
+                smooth={true}
+                duration={500}
+                offset={-100}
+                onClick={toggleMenu}
+              >
                 Skills
               </Link>
             </li>
             <li>
-              <Link to="contact" smooth={true} duration={500} offset={-100}>
+              <Link
+                to="contact"
+                smooth={true}
+                duration={500}
+                offset={-100}
+                onClick={toggleMenu}
+              >
                 Contact
               </Link>
             </li>
@@ -44,7 +91,6 @@ const Header = () => {
         </nav>
       </div>
     </header>
-      
   );
 };
 

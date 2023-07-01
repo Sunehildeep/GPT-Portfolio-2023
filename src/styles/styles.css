@@ -218,7 +218,7 @@ nav ul li a:hover {
 .animate-on-scroll {
     opacity: 0;
 }
-  
+
 
 /* Additional Cyberpunk Styles */
 
@@ -396,9 +396,59 @@ nav ul li a:hover {
     color: #00ff6e;
 }
 
+
+.menu-toggle {
+    cursor: pointer;
+    display: none;
+    width: 40px;
+    height: 30px;
+    position: relative;
+}
+
+.menu-toggle .hamburger {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.menu-toggle .hamburger::before,
+.menu-toggle .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.menu-toggle .hamburger::before {
+    top: -10px;
+}
+
+.menu-toggle .hamburger::after {
+    bottom: -10px;
+}
+
+.open .hamburger {
+    transform: rotate(45deg);
+}
+
+.open .hamburger::before {
+    transform: rotate(90deg);
+    top: 0;
+}
+
+.open .hamburger::after {
+    transform: rotate(90deg);
+    bottom: 0;
+}
+
 /* Responsive Styles */
 
 @media screen and (max-width: 768px) {
+
     header {
         padding: 10px;
     }
@@ -407,12 +457,37 @@ nav ul li a:hover {
         font-size: 32px;
     }
 
-    nav ul li a {
-        margin-left: 10px;
+    nav ul {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .open ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+    }
+
+    .open ul li {
+        margin: 10px 0;
+    }
+
+    .open ul li a {
+        font-size: 16px;
     }
 
     .container {
         padding: 10px;
+        margin: 10px;
     }
 
     .section-about,
@@ -462,12 +537,126 @@ nav ul li a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #0C0C0C; /* Set the desired background color */
-    z-index: 9999; /* Set a high z-index to ensure it's displayed above other elements */
+    background-color: #0C0C0C;
+    /* Set the desired background color */
+    z-index: 9999;
+    /* Set a high z-index to ensure it's displayed above other elements */
 }
 
 .loading-gif {
     width: auto;
     height: 500px;
 
+}
+
+/* Small devices (up to 576px) */
+@media screen and (max-width: 576px) {
+    header {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    nav ul li a {
+        margin-left: 8px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .section-about,
+    .section-projects,
+    .section-skills,
+    .section-contact {
+        padding: 30px 0;
+    }
+
+    .section-about h2,
+    .section-projects h2,
+    .section-skills h2,
+    .section-contact h2 {
+        font-size: 28px;
+        margin-bottom: 25px;
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
+        margin-right: 15px;
+    }
+
+    .project {
+        margin-bottom: 20px;
+    }
+
+    .project h3 {
+        font-size: 18px;
+    }
+
+    .project p {
+        font-size: 14px;
+    }
+
+    .project-image {
+        margin-bottom: 8px;
+    }
+
+    .about-content {
+        flex-direction: column;
+    }
+}
+
+/* Medium devices (between 577px and 768px) */
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    header h1 {
+        font-size: 36px;
+    }
+
+    nav ul li a {
+        margin-left: 15px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .section-about,
+    .section-projects,
+    .section-skills,
+    .section-contact {
+        padding: 50px 0;
+    }
+
+    .section-about h2,
+    .section-projects h2,
+    .section-skills h2,
+    .section-contact h2 {
+        font-size: 32px;
+        margin-bottom: 35px;
+    }
+
+    .profile-image {
+        width: 160px;
+        height: 160px;
+        margin-right: 25px;
+    }
+
+    .project {
+        margin-bottom: 35px;
+    }
+
+    .project h3 {
+        font-size: 22px;
+    }
+
+    .project p {
+        font-size: 16px;
+    }
+
+    .project-image {
+        margin-bottom: 15px;
+    }
 }
