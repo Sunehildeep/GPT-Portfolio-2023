@@ -1,28 +1,35 @@
-import React, { useState } from 'react';
-import '../styles/cyberpunk-header.css';
-import { Link } from 'react-scroll';
-import { gsap } from 'gsap';
+import React, { useState } from "react";
+import "../styles/cyberpunk-header.css";
+import { Link } from "react-scroll";
+import { gsap } from "gsap";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [navClass, setNavClass] = useState("");
 
   const toggleMenu = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
-  
-    const maxHeight = isOpen ? '0' : '300px';
-    gsap.to('nav ul', {
+
+    const maxHeight = isOpen ? "-10px" : "300px";
+
+    gsap.to("nav ul", {
       maxHeight,
       duration: 0.4,
-      ease: 'power2.out',
+      ease: "power2.out",
     });
+
+    if (isOpen) {
+      setTimeout(() => {
+        setNavClass("");
+      }, 180);
+    } else setNavClass("open");
   };
-  
-  
+
   return (
     <header className="cyberpunk-header">
       <div className="container">
         <h1 className="glitch-text">Sunehildeep Singh</h1>
-        <nav className={isOpen ? 'open' : ''}>
+        <nav className={navClass}>
           <div className="menu-toggle" onClick={toggleMenu}>
             <div className="hamburger"></div>
           </div>
