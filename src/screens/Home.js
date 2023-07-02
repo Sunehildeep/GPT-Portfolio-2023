@@ -192,6 +192,20 @@ const Home = () => {
             <br />
           </p>
           <div className="project">
+            <a href="https://github.com/Sunehildeep/ChatBot-TransformerAI">
+              <h3 className="cyberpunk-text">Chatbot - Transformer AI</h3>
+              <p className="cyberpunk-text">
+                A fully scratch encoder-decoder transformer model that is built based upon "Attention is all you need" paper. 
+                It is capable of generating responses based on what it is trained upon. For my project, I used reddit conversations.
+              </p>
+              <img
+                src="images/proj0.png"
+                alt="Project 0"
+                className="project-image"
+              />
+            </a>
+          </div>
+          <div className="project">
             <a href="https://github.com/Sunehildeep/Text-Generator-AI-Model">
               <h3 className="cyberpunk-text">Text Generation Model</h3>
               <p className="cyberpunk-text">
