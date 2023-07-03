@@ -235,6 +235,19 @@ const Home = () => {
             </a>
           </div>
           <div className="project">
+            <a href="https://github.com/Sunehildeep/Chat-React">
+              <h3 className="cyberpunk-text">Chat-React</h3>
+              <p className="cyberpunk-text">
+              Chat-React is a real-time messaging application built with React, MySQL, and Socket.io. It allows users to send private messages to each other, search for users, and initiate conversations. The application provides a seamless messaging experience with real-time updates, message status indicators, and delivery timestamps.
+              </p>
+              <img
+                src="images/proj5.png"
+                alt="Project 5"
+                className="project-image"
+              />
+            </a>
+          </div>
+          <div className="project">
             <a href="https://github.com/Sunehildeep/Custom-Fans-Helios">
               <h3 className="cyberpunk-text">Custom Fans For Acer Helios</h3>
               <p className="cyberpunk-text">
