@@ -14,21 +14,8 @@ const Home = () => {
     // Add the ScrollMagic library initialization code
     const scrollMagicController = controller.current;
     const scrollMagicElements = document.querySelectorAll(".animate-on-scroll");
-    scrollMagicElements.forEach((element) => {
-      new Scene({
-        triggerElement: element,
-        triggerHook: 0.8,
-        reverse: true,
-      })
-        .on("enter", () => {
-          gsap.to(element, { opacity: 1, y: 0, x:0, duration: 1 });
-        })
-        .on("leave", () => {
-          gsap.to(element, { opacity: 0, y: 100, x: -100, duration: 1 });
-        })
-        .addTo(scrollMagicController);
-    });
 
+    
     // Another scene for userpic
     new Scene({
       triggerElement: "#userpic",
@@ -59,6 +46,22 @@ const Home = () => {
         })
         .addTo(scrollMagicController);
     });
+
+    scrollMagicElements.forEach((element) => {
+      new Scene({
+        triggerElement: element,
+        triggerHook: 0.8,
+        reverse: true,
+      })
+        .on("enter", () => {
+          gsap.to(element, { opacity: 1, y: 0, x:0, duration: 1 });
+        })
+        .on("leave", () => {
+          gsap.to(element, { opacity: 0, y: 100, x: -100, duration: 1 });
+        })
+        .addTo(scrollMagicController);
+    });
+
 
     return () => {
       // Clean up ScrollMagic controller when component unmounts

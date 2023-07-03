@@ -89,6 +89,8 @@ section {
     border: 4px solid #ff5555;
     box-shadow: 0 0 10px rgba(255, 85, 85, 0.3);
     transition: box-shadow 0.3s ease-in-out;
+    /* Set x AND Y */
+    transform: translateX(-100px) translateY(100px);
 }
 
 .project a {
@@ -217,6 +219,7 @@ nav ul li a:hover {
 
 .animate-on-scroll {
     opacity: 0;
+    transform: translateX(-100px) translateY(100px);
 }
 
 
