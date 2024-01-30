@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master
+      - "master" # change to the branch you wish to deploy from
 
 permissions:
   contents: read
@@ -10,34 +10,13 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.build-publish.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
-      # Checkout project repository
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      # Setup Node.js environment
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-
-      # Install dependencies
-      - name: Install dependencies
-        run: yarn install --prefer-offline --legacy-peer-deps
-
-      # Build Application
-      - name: Build application
-        run: yarn build
-
-      # Deploy to Github Pages
-      - id: deploy
-        name: Deploy to Github Pages
-        uses: fcodelabs/react-deploy-github-pages-action@v1.0.0
-        with:
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - id: build-publish
+      uses: bitovi/github-actions-react-to-github-pages@v1.2.2
+      with:
+        install_command: npm install --legacy-peer-deps
+        path: build # change to your build folder
