@@ -14,7 +14,7 @@ const AboutMeDescription = () => (
 			developer. I am passionate about Machine Learning and Data Science, and I
 			am always looking for opportunities to learn and grow. I am eager to apply
 			my knowledge and skills to real-world problems and gain experience in the
-			field. I started coding back in 2016 when I was 16 years old and have
+			field. I started coding back in 2016 when I was 14 years old and have
 			gained experience in several languages since then.
 		</p>
 	</div>
