@@ -18,5 +18,4 @@ jobs:
     - id: build-publish
       uses: bitovi/github-actions-react-to-github-pages@v1.2.2
       with:
-        install_command: npm install --legacy-peer-deps
         path: build # change to your build folder
