@@ -306,7 +306,7 @@ nav ul li a:hover {
     margin-bottom: 10px;
 }
 
-.project p {
+.project p, .project span {
     color: #bdbdbd;
     font-size: 18px;
     margin-bottom: 20px;

@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { Controller, Scene } from "scrollmagic";
+import React, { useEffect, useState } from "react";
 import CyberpunkBanner from "../components/Banner";
 import { gsap } from "gsap";
 import { model, prompt } from "../services/gpt";
@@ -84,7 +83,6 @@ const prompts = [
 ];
 
 const Home = () => {
-	const controller: any = useRef(null);
 	const [banner, setBanner] = useState("");
 	const [aboutMe, setAboutMe] = useState("");
 	const [goal, setGoal] = useState("");
@@ -92,61 +90,6 @@ const Home = () => {
 	const [contact, setContact] = useState("");
 	const [fetching, setFetching] = useState(false);
 	const [askme, setAskMe] = useState("");
-
-	const animateDivs = () => {
-		// Initialize ScrollMagic controller
-		controller.current = new Controller();
-
-		// Add the ScrollMagic library initialization code
-		const scrollMagicController = controller.current;
-		const scrollMagicElements = document.querySelectorAll(".animate-on-scroll");
-
-		// Another scene for userpic
-		new Scene({
-			triggerElement: "#userpic",
-			triggerHook: 0.8,
-			reverse: true,
-		})
-			.on("enter", () => {
-				gsap.to("#userpic", { opacity: 1, scale: 1.0, duration: 1 });
-			})
-			.on("leave", () => {
-				gsap.to("#userpic", { opacity: 0, scale: 0, duration: 1 });
-			})
-			.addTo(scrollMagicController);
-
-		// Slow loading for project
-		const projectElements = document.querySelectorAll(".project");
-		projectElements.forEach((element) => {
-			new Scene({
-				triggerElement: element,
-				triggerHook: 1.0,
-				reverse: true,
-			})
-				.on("enter", () => {
-					gsap.to(element, { opacity: 1, y: 0, x: 0, duration: 0.2 });
-				})
-				.on("leave", () => {
-					gsap.to(element, { opacity: 0, y: 100, x: -100, duration: 0.2 });
-				})
-				.addTo(scrollMagicController);
-		});
-
-		scrollMagicElements.forEach((element) => {
-			new Scene({
-				triggerElement: element,
-				triggerHook: 0.8,
-				reverse: true,
-			})
-				.on("enter", () => {
-					gsap.to(element, { opacity: 1, y: 0, x: 0, duration: 1 });
-				})
-				.on("leave", () => {
-					gsap.to(element, { opacity: 0, y: 100, x: -100, duration: 1 });
-				})
-				.addTo(scrollMagicController);
-		});
-	};
 
 	const fetchAndSetText = async (query: string, setState: any) => {
 		const result = await model.generateContentStream(`${prompt}
@@ -169,14 +112,68 @@ const Home = () => {
 				fetchAndSetText(prompts[4], setContact),
 			]).then(() => setFetching(false));
 		};
-		fetchTexts();
-	}, [fetching]);
 
-	useEffect(() => {
-		animateDivs();
+		const animateDivs = async () => {
+			// Add the ScrollMagic library initialization code
+			const ScrollMagic = (await import("scrollmagic")).default;
+			const scrollMagicController = new ScrollMagic.Controller();
+			const scrollMagicElements =
+				document.querySelectorAll(".animate-on-scroll");
+
+			// Another scene for userpic
+			new ScrollMagic.Scene({
+				triggerElement: "#userpic",
+				triggerHook: 0.8,
+				reverse: true,
+			})
+				.on("enter", () => {
+					gsap.to("#userpic", { opacity: 1, scale: 1.0, duration: 1 });
+				})
+				.on("leave", () => {
+					gsap.to("#userpic", { opacity: 0, scale: 0, duration: 1 });
+				})
+				.addTo(scrollMagicController);
+
+			// Slow loading for project
+			const projectElements = document.querySelectorAll(".project");
+			projectElements.forEach((element) => {
+				new ScrollMagic.Scene({
+					triggerElement: element,
+					triggerHook: 1.0,
+					reverse: true,
+				})
+					.on("enter", () => {
+						gsap.to(element, { opacity: 1, y: 0, x: 0, duration: 0.2 });
+					})
+					.on("leave", () => {
+						gsap.to(element, { opacity: 0, y: 100, x: -100, duration: 0.2 });
+					})
+					.addTo(scrollMagicController);
+			});
+
+			scrollMagicElements.forEach((element) => {
+				new ScrollMagic.Scene({
+					triggerElement: element,
+					triggerHook: 0.8,
+					reverse: true,
+				})
+					.on("enter", () => {
+						gsap.to(element, { opacity: 1, y: 0, x: 0, duration: 1 });
+					})
+					.on("leave", () => {
+						gsap.to(element, { opacity: 0, y: 100, x: -100, duration: 1 });
+					})
+					.addTo(scrollMagicController);
+			});
+
+			return scrollMagicController;
+		};
+
+		fetchTexts();
+		const controller: any = animateDivs();
 		return () => {
 			// Clean up ScrollMagic controller when component unmounts
-			if (controller.current) controller.current.destroy(true);
+			if (controller) controller.destroy(true);
 		};
 	}, [fetching]);
 
@@ -186,7 +183,7 @@ const Home = () => {
 
 			<section id="askme" className={`section-askme animate-on-scroll`}>
 				<div className="container">
-					<h2 className="cyberpunk-text">Ask Me Anything</h2>
+					<h2>Ask Me Anything</h2>
 					<div>
 						Want to learn more about me? Try asking below and the AI will answer
 						anything about me! Hit enter after typing your question.
@@ -210,7 +207,7 @@ const Home = () => {
 
 			<section id="about" className={`section-about animate-on-scroll`}>
 				<div className="container">
-					<h2 className="cyberpunk-text">About Me</h2>
+					<h2>About Me</h2>
 					<div className="goal-text">
 						<div className="about-content">
 							<Image
@@ -221,9 +218,9 @@ const Home = () => {
 								alt="Profile"
 								className="profile-image animate-on-scroll"
 							/>
-							<p className="about-text">
+							<span className="about-text">
 								<ReactMarkdown>{aboutMe}</ReactMarkdown>
-							</p>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -231,7 +228,7 @@ const Home = () => {
 
 			<section id="goal" className={`section-goal animate-on-scroll`}>
 				<div className="container">
-					<h2 className="cyberpunk-text">My Goal</h2>
+					<h2>My Goal</h2>
 					<div className="goal-text">
 						<ReactMarkdown>{goal}</ReactMarkdown>
 						<div className="resume-button">
@@ -252,7 +249,7 @@ const Home = () => {
 
 			<section id="skills" className={`section-skills animate-on-scroll`}>
 				<div className="container">
-					<h2 className="cyberpunk-text">My Skills</h2>
+					<h2>My Skills</h2>
 					<div>
 						<ReactMarkdown>{skills}</ReactMarkdown>
 					</div>
@@ -261,8 +258,8 @@ const Home = () => {
 
 			<section id="projects" className={`section-projects animate-on-scroll`}>
 				<div className="container">
-					<h2 className="cyberpunk-text">My Projects</h2>
-					<div className="cyberpunk-text">
+					<h2>My Projects</h2>
+					<div>
 						Here are some of my projects that I have worked on. Click on them to
 						view the source code.
 						<br />
@@ -276,7 +273,7 @@ const Home = () => {
 
 			<section id="contact" className={`section-contact animate-on-scroll`}>
 				<div className="container">
-					<h2 className="cyberpunk-text">Contact Me</h2>
+					<h2>Contact Me</h2>
 					<div>
 						<ReactMarkdown>{contact}</ReactMarkdown>
 					</div>

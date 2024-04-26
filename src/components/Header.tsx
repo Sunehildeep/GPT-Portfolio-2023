@@ -40,10 +40,21 @@ const Header = () => {
 				/>
 				<h1 className="glitch-text">Sunehildeep Singh</h1>
 				<nav className={navClass}>
-					<div className="menu-toggle" onClick={toggleMenu}>
-						<div className="hamburger"></div>
+					<div className="menu-toggle" onClick={() => toggleMenu()}>
+						<div className="hamburger" />
 					</div>
 					<ul>
+						<li>
+							<Link
+								to="askme"
+								smooth={true}
+								duration={500}
+								offset={-100}
+								onClick={toggleMenu}
+							>
+								Ask Anything
+							</Link>
+						</li>
 						<li>
 							<Link
 								to="about"

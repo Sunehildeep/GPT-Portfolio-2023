@@ -12,9 +12,9 @@ const CyberpunkBanner = ({ text }: { text: string }) => {
 			<div className="glitch-container">
 				<div className="glitch-overlay"></div>
 				<h1 className="glitch-text">Welcome to my Portfolio</h1>
-				<p className="glitch-subtitle">
+				<span className="glitch-subtitle">
 					<ReactMarkdown>{text}</ReactMarkdown>
-				</p>
+				</span>
 
 				<Link
 					className="glitch-button"

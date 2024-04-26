@@ -12,8 +12,8 @@ const Project = ({ title, description, image, link }: ProjectProps) => {
 	return (
 		<div className="project">
 			<a href={link}>
-				<h3 className="cyberpunk-text">{title}</h3>
-				<p className="cyberpunk-text">{description}</p>
+				<h3>{title}</h3>
+				<span>{description}</span>
 				{image && (
 					<Image
 						width={300}
