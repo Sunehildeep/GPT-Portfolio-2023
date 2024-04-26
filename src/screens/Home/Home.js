@@ -25,25 +25,6 @@ const Home = () => {
 	const [fetching, setFetching] = useState(false);
 	const [askme, setAskMe] = useState("");
 
-	const fetchAndSetText = async (query, setState) => {
-		const result = await model.generateContentStream(`${prompt}
-		
-		User: ${query}`);
-		for await (const chunk of result.stream) {
-			setState((prev) => prev + chunk.text());
-		}
-	};
-
-	const fetchTexts = async () => {
-		await Promise.all([
-			fetchAndSetText(prompts[0], setBanner),
-			fetchAndSetText(prompts[1], setAboutMe),
-			fetchAndSetText(prompts[2], setGoal),
-			fetchAndSetText(prompts[3], setSkills),
-			fetchAndSetText(prompts[4], setContact),
-		]).then(() => setFetching(false));
-	};
-
 	const animateDivs = () => {
 		// Initialize ScrollMagic controller
 		controller.current = new Controller();
@@ -99,10 +80,29 @@ const Home = () => {
 		});
 	};
 
+	const fetchAndSetText = async (query, setState) => {
+		const result = await model.generateContentStream(`${prompt}
+		
+		User: ${query}`);
+		for await (const chunk of result.stream) {
+			setState((prev) => prev + chunk.text());
+		}
+	};
+
 	useEffect(() => {
 		if (fetching) return;
+
+		const fetchTexts = async () => {
+			await Promise.all([
+				fetchAndSetText(prompts[0], setBanner),
+				fetchAndSetText(prompts[1], setAboutMe),
+				fetchAndSetText(prompts[2], setGoal),
+				fetchAndSetText(prompts[3], setSkills),
+				fetchAndSetText(prompts[4], setContact),
+			]).then(() => setFetching(false));
+		};
 		fetchTexts();
-	}, [fetchTexts, fetching]);
+	}, [fetching]);
 
 	useEffect(() => {
 		animateDivs();
