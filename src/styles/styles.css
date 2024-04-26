@@ -183,7 +183,6 @@ section {
 
 header {
     background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
     position: sticky;
     top: 0;
     z-index: 999;
@@ -233,6 +232,19 @@ nav ul li a:hover {
 
 
 /* Additional Cyberpunk Styles */
+
+.section-askme {
+    background-color: rgba(23, 23, 23, 0.9);
+    padding: 80px 0;
+}
+
+.section-askme h2 {
+    color: #ff2ad9;
+    font-size: 40px;
+    letter-spacing: 3px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
 
 .section-about {
     background-color: rgba(26, 26, 26, 0.8);

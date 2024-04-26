@@ -1,54 +1,60 @@
 .cyberpunk-header {
     background-color: #000;
-    padding: 20px 0;
+    padding: 0;
+}
+
+.ai-warning {
+    color: #ff7f00;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+}
+
+.glitch-text {
+  color: #fff;
+  font-size: 32px;
+  font-weight: bold;
+  /* Add other glitch text styles */
+  animation: glitch 3s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0 0 4px #fff, 0 0 6px #0ff;
   }
-  
-  .glitch-text {
-    color: #fff;
-    font-size: 32px;
-    font-weight: bold;
-    /* Add other glitch text styles */
-    animation: glitch 3s infinite;
+  25% {
+    text-shadow: 2px -2px 4px #0ff, -2px 2px 6px #fff;
   }
-  
-  @keyframes glitch {
-    0% {
-      text-shadow: 0 0 4px #fff, 0 0 6px #0ff;
-    }
-    25% {
-      text-shadow: 2px -2px 4px #0ff, -2px 2px 6px #fff;
-    }
-    50% {
-      text-shadow: -2px 2px 4px #fff, 2px -2px 6px #0ff;
-    }
-    75% {
-      text-shadow: 2px -2px 4px #0ff, -2px 2px 6px #fff;
-    }
-    100% {
-      text-shadow: 0 0 4px #fff, 0 0 6px #0ff;
-    }
+  50% {
+    text-shadow: -2px 2px 4px #fff, 2px -2px 6px #0ff;
   }
-  
-  nav ul {
-    list-style: none;
-    display: flex;
+  75% {
+    text-shadow: 2px -2px 4px #0ff, -2px 2px 6px #fff;
   }
-  
-  nav ul li {
-    margin-right: 20px;
+  100% {
+    text-shadow: 0 0 4px #fff, 0 0 6px #0ff;
   }
-  
-  nav ul li:last-child {
-    margin-right: 0;
-  }
-  
-  nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    /* Add other navigation link styles */
-  }
-  
-  nav ul li a:hover {
-    color: #1e90ff;
-  }
-  
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav ul li:last-child {
+  margin-right: 0;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  /* Add other navigation link styles */
+}
+
+nav ul li a:hover {
+  color: #1e90ff;
+}
