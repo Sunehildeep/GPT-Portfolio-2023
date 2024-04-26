@@ -45,12 +45,12 @@ jobs:
           node-version: "20"
       - name: Check if NEXT_PUBLIC_API_KEY exists
         run: |
-          if [ -z "${{ secrets.NEXT_PUBLIC_API_KEY }}" ]; then
+          if [ -z "${{ env.NEXT_PUBLIC_API_KEY }}" ]; then
             echo "Error: NEXT_PUBLIC_API_KEY secret is missing."
             exit 1
           fi
       - name: Export API key
-        run: echo "NEXT_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_API_KEY }}" >> $GITHUB_ENV
+        run: echo "NEXT_PUBLIC_API_KEY=${{ env.NEXT_PUBLIC_API_KEY }}" >> $GITHUB_ENV
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
@@ -63,8 +63,6 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-        env:
-          NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
