@@ -43,6 +43,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+      - name: Check if NEXT_PUBLIC_API_KEY exists
+        run: |
+          if [ -z "${{ secrets.NEXT_PUBLIC_API_KEY }}" ]; then
+            echo "Error: NEXT_PUBLIC_API_KEY secret is missing."
+            exit 1
+          fi
+      - name: Export API key
+        run: echo "NEXT_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_API_KEY }}" >> $GITHUB_ENV
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
