@@ -65,17 +65,25 @@
   }
 }
 
+.askme-input {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
 .glitch-subtitle {
   color: #fff;
   font-size: 18px;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  white-space: nowrap;
   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
   /* Add other glitch subtitle styles */
-  animation: 
-    flicker 2s infinite,
-    typing 3.5s steps(40, end),
-    blink-caret .75s step-end infinite;
 }
 
 /* The typing effect */
