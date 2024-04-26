@@ -102,7 +102,7 @@ const Home = () => {
 	useEffect(() => {
 		if (fetching) return;
 		fetchTexts();
-	}, []);
+	}, [fetchTexts, fetching]);
 
 	useEffect(() => {
 		animateDivs();
