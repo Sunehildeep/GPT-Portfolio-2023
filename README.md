@@ -13,22 +13,14 @@ This repository houses the code for my dynamic portfolio, which leverages GPT te
 - **Customization**: The portfolio adapts to each visitor's interests, ensuring a unique experience for everyone.
 - **Easy Integration**: The code is designed for easy integration with existing portfolio websites, making it accessible to all.
 
-## Usage
-
-To deploy this dynamic portfolio on your own website, follow these steps:
-
-1. Clone this repository to your local machine.
-2. Customize the content and styling to fit your personal brand.
-3. Host the modified files on your web server or deploy using a platform like GitHub Pages.
-
 ## Credits
 
-This project wouldn't be possible without the incredible advancements in AI technology, particularly GPT, developed by OpenAI. Special thanks to the open-source community for their contributions and support.
+This project wouldn't be possible without the incredible advancements in AI technology, particularly Gemini, developed by Google. Special thanks to the open-source community for their contributions and support.
 
 ## Get Started
 
 Experience the future of portfolio presentation by visiting [My Dynamic Portfolio](https://sunehildeepsingh.com/). Every visit offers a new journey in personalized interaction.
 
-For more information or inquiries, feel free to contact me at [Your Email Address].
+For more information or inquiries, feel free to contact me at nsunehil@gmail.com
 
 Thank you for exploring my Dynamic Portfolio project!
