@@ -481,12 +481,17 @@ nav ul li a:hover {
         font-size: 32px;
     }
 
-    nav ul {
+    nav ul li {
         display: none;
     }
 
     .menu-toggle {
         display: block;
+    }
+
+    .open ul li {
+        display: block;
+        margin: 10px 0;
     }
 
     .open ul {
@@ -499,10 +504,6 @@ nav ul li a:hover {
         width: 100%;
         background-color: rgba(0, 0, 0, 0.8);
         padding: 20px;
-    }
-
-    .open ul li {
-        margin: 10px 0;
     }
 
     .open ul li a {
