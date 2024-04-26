@@ -7,18 +7,10 @@ on:
   repository_dispatch:
     types: [deploy-next, deploy-staging]
 
-concurrency:
-  group: deploy-next-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   next:
-    if: github.repository == 'carbon-design-system/carbon-for-ibm-dotcom-nextjs-test'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{secrets.BOT_TOKEN}}
       - name: Use Node.js 14.x
         uses: actions/setup-node@v2
         with:
@@ -30,13 +22,6 @@ jobs:
         run: yarn update-next
       - name: Set env vars
         uses: ./.github/actions/set-dotenv
-        with:
-          env-file: .env
-        env:
-          PROFILE_HOST: ${{ secrets.PROFILE_HOST }}
-          BASE_PATH: "/carbon-for-ibm-dotcom-nextjs-test/next"
-          ALTLANG_ROOT_PATH: "/carbon-for-ibm-dotcom-nextjs-test/next/"
-          SASS_PATH: node_modules:src
       - name: Build project
         run: yarn build
       - name: Export project
