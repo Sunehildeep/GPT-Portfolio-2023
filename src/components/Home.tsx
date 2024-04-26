@@ -6,6 +6,7 @@ import { model, prompt } from "../services/gpt";
 import Project from "../components/Project";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
+import { saveDetails } from "@/services/tracker";
 
 export const projects = [
 	{
@@ -168,7 +169,7 @@ const Home = () => {
 
 			return scrollMagicController;
 		};
-
+		saveDetails("Home Page Visited");
 		fetchTexts();
 		const controller: any = animateDivs();
 		return () => {
@@ -192,10 +193,11 @@ const Home = () => {
 							type="text"
 							placeholder="Ask me anything"
 							className="askme-input"
-							onKeyPress={(e: any) => {
+							onKeyDown={(e: any) => {
 								if (e.key === "Enter") {
 									setAskMe(" ");
 									fetchAndSetText(e.target.value, setAskMe);
+									saveDetails(`Asked: ${e.target.value}`);
 								}
 							}}
 						/>
