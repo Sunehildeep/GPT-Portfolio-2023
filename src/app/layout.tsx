@@ -9,7 +9,7 @@ export const metadata = {
     description: 'Portfolio of Sunehildeep Singh',
 };
 
-const RootLayout = ({ children }) => {
+const RootLayout = ({ children }: { children: React.ReactNode;}) => {
     return (
         <html lang="en">
             <head>
