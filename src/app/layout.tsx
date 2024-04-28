@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<head><!-- Google tag (gtag.js) -->
+<head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-20H3WVHZW4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -24,7 +24,8 @@ export default function RootLayout({
   gtag('js', new Date());
 
   gtag('config', 'G-20H3WVHZW4');
-</script></head>
+</script>
+</head>
 			<body className={inter.className}>{children}</body>
 		</html>
 	);
