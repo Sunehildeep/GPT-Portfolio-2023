@@ -1,6 +1,7 @@
 import React from 'react';
 import { Inter } from 'next/font/google';
 import '../styles/styles.css';
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,15 +14,14 @@ const RootLayout = ({ children }: { children: React.ReactNode;}) => {
     return (
         <html lang="en">
             <head>
-                <script async src="https://www.googletagmanager.com/gtag/js?id=G-20H3WVHZW4"></script>
-                <script>
-                    {`
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-                        gtag('config', 'G-20H3WVHZW4');
-                    `}
-                </script>
+                <Script async src="https://www.googletagmanager.com/gtag/js?id=G-20H3WVHZW4"></Script>
+                <Script>
+                    {window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                
+                  gtag('config', 'G-20H3WVHZW4');}
+                </Script>
             </head>
             <body className={inter.className}>{children}</body>
         </html>
