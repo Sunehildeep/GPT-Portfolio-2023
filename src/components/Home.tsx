@@ -7,6 +7,7 @@ import Project from "../components/Project";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import { saveDetails } from "@/services/tracker";
+import LoadingOverlay from "react-loading-overlay";
 
 export const projects = [
 	{
@@ -89,7 +90,7 @@ const Home = () => {
 	const [goal, setGoal] = useState("");
 	const [skills, setSkills] = useState("");
 	const [contact, setContact] = useState("");
-	const [fetching, setFetching] = useState(false);
+	const [fetching, setFetching] = useState(true);
 	const [askme, setAskMe] = useState("");
 
 	const fetchAndSetText = async (query: string, setState: any) => {
@@ -102,8 +103,6 @@ const Home = () => {
 	};
 
 	useEffect(() => {
-		if (fetching) return;
-
 		const fetchTexts = async () => {
 			await Promise.all([
 				fetchAndSetText(prompts[0], setBanner),
@@ -114,6 +113,11 @@ const Home = () => {
 			]).then(() => setFetching(false));
 		};
 
+		saveDetails("Home Page Visited");
+		fetchTexts();
+	}, [fetching]);
+
+	useEffect(() => {
 		const animateDivs = async () => {
 			// Add the ScrollMagic library initialization code
 			const ScrollMagic = (await import("scrollmagic")).default;
@@ -169,17 +173,40 @@ const Home = () => {
 
 			return scrollMagicController;
 		};
-		saveDetails("Home Page Visited");
-		fetchTexts();
 		const controller: any = animateDivs();
 		return () => {
 			// Clean up ScrollMagic controller when component unmounts
 			if (controller) controller.destroy(true);
 		};
-	}, [fetching]);
+	}, []);
 
 	return (
-		<>
+		<LoadingOverlay
+			active={fetching}
+			spinner
+			text="Generating portfolio with AI..."
+			styles={{
+				overlay: (base: any) => ({
+					...base,
+					background: "black",
+				}),
+				content: (base: any) => ({
+					...base,
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "flex-start",
+					alignItems: "center",
+					marginTop: "15%",
+				}),
+				spinner: (base: any) => ({
+					...base,
+					width: "100px",
+					"& svg circle": {
+						stroke: "white",
+					},
+				}),
+			}}
+		>
 			<CyberpunkBanner text={banner} />
 
 			<section id="askme" className={`section-askme animate-on-scroll`}>
@@ -281,7 +308,7 @@ const Home = () => {
 					</div>
 				</div>
 			</section>
-		</>
+		</LoadingOverlay>
 	);
 };
 
