@@ -7,7 +7,7 @@ import Project from "../components/Project";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import { saveDetails } from "@/services/tracker";
-import LoadingOverlay from "react-loading-overlay";
+import LoadingOverlay from "react-loading-overlay-ts";
 
 export const projects = [
 	{
