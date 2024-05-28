@@ -135,7 +135,7 @@ const Home = () => {
 		};
 
 		fetchTexts();
-	}, [fetching]);
+	}, []);
 
 	useEffect(() => {
 		const animateDivs = async () => {
