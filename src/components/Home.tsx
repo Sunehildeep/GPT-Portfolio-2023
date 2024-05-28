@@ -93,17 +93,38 @@ const Home = () => {
 	const [fetching, setFetching] = useState(true);
 	const [askme, setAskMe] = useState("");
 
-	const fetchAndSetText = async (query: string, setState: any) => {
-		const result = await model.generateContentStream(`${prompt}
+	const fetchAndSetText = async (
+		query: string,
+		setState: any,
+		save: boolean = false
+	) => {
+		try {
+			const result = await model.generateContentStream(`${prompt}
 		
 		User: ${query}`);
-		for await (const chunk of result.stream) {
-			setState((prev: string) => prev + chunk.text());
+			const collectiveText = [];
+
+			// for await (const chunk of result.stream) {
+			// 	setState((prev: string) => prev + chunk.text());
+			// }
+			for await (const chunk of result.stream) {
+				collectiveText.push(chunk.text());
+			}
+			setState(collectiveText.join(""));
+			if (save)
+				saveDetails(`Asked: ${query}\nAnswered: ${collectiveText.join("")}`);
+		} catch (e) {
+			console.error(e);
+			setState(
+				"Sorry, I am unable to fetch the data right now. Please try again later."
+			);
 		}
 	};
 
 	useEffect(() => {
 		const fetchTexts = async () => {
+			saveDetails("Home Page Visited");
+
 			await Promise.all([
 				fetchAndSetText(prompts[0], setBanner),
 				fetchAndSetText(prompts[1], setAboutMe),
@@ -113,7 +134,6 @@ const Home = () => {
 			]).then(() => setFetching(false));
 		};
 
-		saveDetails("Home Page Visited");
 		fetchTexts();
 	}, [fetching]);
 
@@ -220,11 +240,15 @@ const Home = () => {
 							type="text"
 							placeholder="Ask me anything"
 							className="askme-input"
-							onKeyDown={(e: any) => {
+							onKeyDown={async (e: any) => {
 								if (e.key === "Enter") {
+									setFetching(true);
 									setAskMe(" ");
-									fetchAndSetText(e.target.value, setAskMe);
-									saveDetails(`Asked: ${e.target.value}`);
+									await Promise.all([
+										fetchAndSetText(e.target.value, setAskMe, true),
+									]).then(() => {
+										setFetching(false);
+									});
 								}
 							}}
 						/>
