@@ -11,6 +11,13 @@ import LoadingOverlay from "react-loading-overlay-ts";
 
 export const projects = [
 	{
+		title: "Transformer Encoder-Decoder Model",
+		description:
+			"An encoder-decoder transformer text generative model made from scratch based on the paper 'Attention is All You Need'.",
+		image: "/images/proj0.png",
+		link: "https://github.com/Sunehildeep/ChatBot-TransformerAI",
+	},
+	{
 		title: "Text Generation Model",
 		description:
 			"A fully scratch decoder-only text generative model that is capable of generating text based on what it is trained upon. For my project, I used song lyrics.",
@@ -104,12 +111,12 @@ const Home = () => {
 		User: ${query}`);
 			const collectiveText = [];
 
-			// for await (const chunk of result.stream) {
-			// 	setState((prev: string) => prev + chunk.text());
-			// }
 			for await (const chunk of result.stream) {
+				if (fetching) setFetching(false);
 				collectiveText.push(chunk.text());
+				setState((prev: string) => prev + chunk.text());
 			}
+
 			setState(collectiveText.join(""));
 			if (save)
 				saveDetails(`Asked: ${query}\nAnswered: ${collectiveText.join("")}`);
@@ -131,7 +138,7 @@ const Home = () => {
 				fetchAndSetText(prompts[2], setGoal),
 				fetchAndSetText(prompts[3], setSkills),
 				fetchAndSetText(prompts[4], setContact),
-			]).then(() => setFetching(false));
+			]);
 		};
 
 		fetchTexts();

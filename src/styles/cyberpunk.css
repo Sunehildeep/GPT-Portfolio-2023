@@ -121,6 +121,7 @@
   text-decoration: none;
   /* Add other glitch button styles */
   animation: pulse 2s infinite;
+  cursor: pointer;
 }
 
 @keyframes pulse {
