@@ -692,3 +692,21 @@ nav ul li a:hover {
         margin-bottom: 15px;
     }
 }
+
+.loading-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-page-loading {
+    display: none;
+}

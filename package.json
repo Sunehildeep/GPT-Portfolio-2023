@@ -14,6 +14,7 @@
     "@types/scrollmagic": "^2.0.8",
     "gsap": "^3.12.5",
     "next": "14.2.3",
+    "rc-progress": "^4.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-loading-overlay-ts": "^2.0.2",
