@@ -146,13 +146,13 @@ const Home = () => {
 				chunks.push(chunk.text());
 				fakeLoading(maxTime, setLoading);
 			}
+			setLoading(100);
 
 			const collectiveText = chunks.join("");
 			const jsonText = collectiveText.match(/```json([\s\S]*)```/);
 			const json: { [key: string]: string } = jsonText
 				? JSON.parse(jsonText[1])
 				: {};
-			setLoading(100);
 			return json;
 		} catch (error) {
 			console.error(error);
