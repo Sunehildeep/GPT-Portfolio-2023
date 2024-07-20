@@ -5,13 +5,10 @@ import ReactMarkdown from "react-markdown";
 
 const CyberpunkBanner = ({ text }: { text: string }) => {
 	return (
-		<div className="cyberpunk-banner">
-			<video className="bg-video" autoPlay loop muted>
-				<source src={"images/bg2.mp4"} type="video/mp4" />
-			</video>
+		<section className="cyberpunk-banner">
 			<div className="glitch-container">
 				<div className="glitch-overlay"></div>
-				<h1 className="glitch-text">Welcome to my Portfolio</h1>
+				<h1 className="glitch-text">This won&apos;t be like other websites</h1>
 				<span className="glitch-subtitle">
 					<ReactMarkdown>{text}</ReactMarkdown>
 				</span>
@@ -23,10 +20,10 @@ const CyberpunkBanner = ({ text }: { text: string }) => {
 					duration={500}
 					offset={-200}
 				>
-					Learn More
+					You won&apos;t regret it
 				</Link>
 			</div>
-		</div>
+		</section>
 	);
 };
 

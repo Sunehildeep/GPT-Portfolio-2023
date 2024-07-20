@@ -26,7 +26,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                     gtag('config', 'G-20H3WVHZW4');`}
 				</Script>
 			</head>
-			<body className={inter.className}>{children}</body>
+			<body className={inter.className}>
+				<video className="bg-video" autoPlay loop muted>
+					<source src={"images/bg2.mp4"} type="video/mp4" />
+				</video>
+				{children}
+			</body>
 		</html>
 	);
 };

@@ -22,25 +22,39 @@ body {
     background-repeat: no-repeat;
     color: #fff;
     opacity: 100;
+    overflow: hidden;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
 }
 
 
 .container {
-    max-width: 1200px;
+    max-width: 60%;
     margin: 0 auto;
     padding: 20px;
 }
 
 h1,
-h2,
+h2 {
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+
 h3 {
-    font-size: 24px;
+    font-size: 16px;
     margin: 0;
     padding: 0;
 }
 
 section {
     padding: 60px 0;
+    width: 80%;
+    margin: auto;
+    position: relative;
 }
 
 .section-about {
@@ -53,7 +67,7 @@ section {
     color: #66d9ef;
     text-transform: uppercase;
     margin-bottom: 40px;
-    font-size: 36px;
+    font-size: 26px;
 }
 
 .section-about .about-content {
@@ -90,7 +104,7 @@ section {
     color: #50fa7b;
     text-transform: uppercase;
     margin-bottom: 40px;
-    font-size: 36px;
+    font-size: 26px;
 }
 
 .project {
@@ -137,7 +151,7 @@ section {
     color: #bd93f9;
     text-transform: uppercase;
     margin-bottom: 40px;
-    font-size: 36px;
+    font-size: 26px;
 }
 
 .skills-list {
@@ -168,7 +182,7 @@ section {
     color: #f8f8f2;
     text-transform: uppercase;
     margin-bottom: 40px;
-    font-size: 36px;
+    font-size: 26px;
 }
 
 .section-contact a {
@@ -183,7 +197,8 @@ section {
 
 header {
     background-color: rgba(0, 0, 0, 0.8);
-    position: sticky;
+    position: fixed;
+    width: 100%;
     top: 0;
     z-index: 999;
 }
@@ -240,7 +255,7 @@ nav ul li a:hover {
 
 .section-askme h2 {
     color: #ff2ad9;
-    font-size: 40px;
+    font-size: 36px;
     letter-spacing: 3px;
     margin-bottom: 40px;
     text-transform: uppercase;
@@ -253,7 +268,7 @@ nav ul li a:hover {
 
 .section-about h2 {
     color: #2efff2;
-    font-size: 40px;
+    font-size: 36px;
     letter-spacing: 3px;
     margin-bottom: 40px;
     text-transform: uppercase;
@@ -266,7 +281,7 @@ nav ul li a:hover {
 
 .section-goal h2 {
     color: #ff2ad9;
-    font-size: 40px;
+    font-size: 36px;
     letter-spacing: 3px;
     margin-bottom: 40px;
     text-transform: uppercase;
@@ -283,7 +298,7 @@ nav ul li a:hover {
 
 .section-projects h2 {
     color: #2affb8;
-    font-size: 40px;
+    font-size: 36px;
     letter-spacing: 3px;
     margin-bottom: 40px;
     text-transform: uppercase;
@@ -326,7 +341,7 @@ nav ul li a:hover {
 
 .section-skills h2 {
     color: #bd2dff;
-    font-size: 40px;
+    font-size: 36px;
     letter-spacing: 3px;
     margin-bottom: 40px;
     text-transform: uppercase;
@@ -343,7 +358,7 @@ nav ul li a:hover {
 
 .section-contact h2 {
     color: #f8f8f2;
-    font-size: 40px;
+    font-size: 36px;
     letter-spacing: 3px;
     margin-bottom: 40px;
     text-transform: uppercase;
@@ -644,7 +659,7 @@ nav ul li a:hover {
 /* Medium devices (between 577px and 768px) */
 @media screen and (min-width: 577px) and (max-width: 768px) {
     header h1 {
-        font-size: 36px;
+        font-size: 26px;
     }
 
     nav ul li a {
