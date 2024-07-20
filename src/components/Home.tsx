@@ -318,8 +318,7 @@ const Home = () => {
 				<div className="container">
 					<h2>Now, why don&apos;t you try asking me something?</h2>
 					<h3>
-						Want to learn more about me? Try asking below and the AI will answer
-						anything about me! Hit enter after typing your question.
+						If you have questions, I got answers. Probably.
 						<br />
 						<input
 							type="text"
