@@ -15,6 +15,7 @@ import { prompts } from "./prompts";
 import { projects } from "./projects";
 import ReactMarkdown from "react-markdown";
 import { gsap } from "gsap";
+import { saveDetails } from "@/services/tracker";
 
 type Section = {
 	id: string;
@@ -82,9 +83,12 @@ export default function Home() {
 
 	const handleQuestion = async (question: string) => {
 		try {
+			let collectiveText = "";
 			for await (const chunk of await getAnswer(question)) {
 				setAskme((old) => old + chunk);
+				collectiveText += chunk;
 			}
+			saveDetails(`Asked: ${question} | Answered: ${collectiveText}`);
 		} catch (error) {
 			setAskme("Resource limit exceeded. Please try again later.");
 		}
@@ -136,6 +140,7 @@ export default function Home() {
 	}, []);
 
 	useEffect(() => {
+		saveDetails("Home Page Visited");
 		const sectionElements = document.querySelectorAll("section");
 		if (!sectionElements.length) return;
 		const setAnimations = async () => {
