@@ -9,6 +9,7 @@ import {
 	NavbarMenu,
 	NavbarMenuItem,
 	Avatar,
+	Link as NextUILink
 } from "@nextui-org/react";
 import { navItems } from "./items";
 import { Link } from "react-scroll";
@@ -41,7 +42,8 @@ export default function Header() {
 			<NavbarContent className="hidden sm:flex gap-8" justify="center">
 				{navItems.map((item: NavItem, index: number) => (
 					<NavbarItem key={`${item}-${index}`}>
-						<Link
+						{item.name === "Resume" ? <NextUILink href={item.href}>{item.name}</NextUILink> : 
+							<Link
 							smooth={true}
 							duration={500}
 							offset={-200}
@@ -50,7 +52,7 @@ export default function Header() {
 							className="cursor-pointer"
 						>
 							{item.name}
-						</Link>
+						</Link>}
 					</NavbarItem>
 				))}
 			</NavbarContent>
@@ -58,7 +60,8 @@ export default function Header() {
 			<NavbarMenu>
 				{navItems.map((item: NavItem, index: number) => (
 					<NavbarMenuItem key={`${item}-${index}`}>
-						<Link
+						{item.name === "Resume" ? <NextUILink href={item.href}>{item.name}</NextUILink> : 
+							<Link
 							smooth={true}
 							duration={500}
 							color={"foreground"}
@@ -67,7 +70,7 @@ export default function Header() {
 							onClick={() => setIsMenuOpen(false)}
 						>
 							{item.name}
-						</Link>
+						</Link>}
 					</NavbarMenuItem>
 				))}
 			</NavbarMenu>
