@@ -4,6 +4,10 @@ export const navItems: NavItem[] = [
 		href: "banner",
 	},
 	{
+		name: "Resume",
+		href: "/images/resume.pdf",
+	},
+	{
 		name: "Ask Anything",
 		href: "askme",
 	},
