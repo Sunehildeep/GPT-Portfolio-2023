@@ -22,7 +22,6 @@ body {
     background-repeat: no-repeat;
     color: #fff;
     opacity: 100;
-    overflow: hidden;
 }
 
 html, body {
@@ -238,6 +237,13 @@ nav ul li a {
 
 nav ul li a:hover {
     color: #ff7f00;
+}
+
+.journey-text {
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 20px;
+    line-height: 1.5;
 }
 
 .animate-on-scroll {
@@ -482,6 +488,11 @@ nav ul li a:hover {
     transform: rotate(90deg);
     bottom: 0;
 }
+.resume-button {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
 
 /* Responsive Styles */
 
@@ -598,6 +609,7 @@ nav ul li a:hover {
 
 /* Small devices (up to 576px) */
 @media screen and (max-width: 576px) {
+   
     header {
         padding: 10px;
     }
@@ -619,6 +631,7 @@ nav ul li a:hover {
     .section-skills,
     .section-contact {
         padding: 30px 0;
+
     }
 
     .section-about h2,

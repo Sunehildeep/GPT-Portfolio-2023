@@ -8,19 +8,19 @@ const CyberpunkBanner = ({ text }: { text: string }) => {
 		<section className="cyberpunk-banner">
 			<div className="glitch-container">
 				<div className="glitch-overlay"></div>
-				<h1 className="glitch-text">This won&apos;t be like other websites</h1>
+				{/* <h1 className="glitch-text">This won&apos;t be like other websites</h1> */}
 				<span className="glitch-subtitle">
 					<ReactMarkdown>{text}</ReactMarkdown>
 				</span>
 
 				<Link
 					className="glitch-button"
-					to="askme"
+					to="journey"
 					smooth={true}
 					duration={500}
 					offset={-200}
 				>
-					You won&apos;t regret it
+					Explore My Journey
 				</Link>
 			</div>
 		</section>

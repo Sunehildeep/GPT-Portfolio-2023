@@ -8,6 +8,11 @@ import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import { saveDetails } from "@/services/tracker";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import {
+	VerticalTimeline,
+	VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -95,13 +100,13 @@ const prompts = [
 	{
 		type: "aboutMe",
 		prompt:
-			"Write a fun and engaging biography of Sunehildeep Singh. Highlight his educational background, professional experiences, and passions with a touch of humor. Make it clear who he is, but keep it light and relatable.",
+			"Write a fun and engaging biography of Sunehildeep Singh. Highlight his educational background, professional experiences, and passions with a touch of humor. Make it clear who he is, but keep it light and relatable. Describe Sunehildeep Singh's life goals and aspirations with a casual, conversational tone. Outline his vision for his career and personal life in a way that feels genuine and a bit cheeky.",
 	},
-	{
-		type: "goal",
-		prompt:
-			"Describe Sunehildeep Singh's life goals and aspirations with a casual, conversational tone. Outline his vision for his career and personal life in a way that feels genuine and a bit cheeky.",
-	},
+	// {
+	// 	type: "goal",
+	// 	prompt:
+	// 		"Describe Sunehildeep Singh's life goals and aspirations with a casual, conversational tone. Outline his vision for his career and personal life in a way that feels genuine and a bit cheeky.",
+	// },
 	{
 		type: "skills",
 		prompt:
@@ -113,6 +118,55 @@ const prompts = [
 			"Provide contact information for Sunehildeep Singh with a friendly and approachable tone. Make it easy to find and use, and add a touch of personality to invite potential collaborators or inquiries.",
 	},
 ];
+
+const timelineData = [
+	{
+		year: 2016,
+		content:
+			"At 14, I learned my first programming language, Pawn, used for SA:MP servers, within just 3 months. Shortly after, I also picked up PHP.",
+	},
+	{
+		year: 2017,
+		content:
+			"I became a reputable member of the SA:MP community, contributing by helping others and creating content. I established my own community, which grew to 100+ members, and managed a team of Admins, Managers, Moderators, Testers, Designers, and Programmers. I also created my first GitHub repository and expanded my skill set by learning Python, C#, Java, and JavaScript. I developed websites, user control panels, game scripts, and made significant community contributions. I also learned Photoshop and video editing, honing my skills in leadership, marketing, programming, and design.",
+	},
+	{
+		year: 2018,
+		content:
+			"I created widely-used scripts for the SA:MP community and launched a startup called Honor Gaming Studios with online friends. Although we had to shut it down due to school commitments, the experience was incredibly valuable as I had learned Game Programming as well. Later that year, I began learning Docker, Golang, and TensorFlow as I delved into AI. I also started making Custom Windows Images specially tweaked for gaming and performance by researching improvements and released them on TeamOS.",
+	},
+	{
+		year: 2019,
+		content:
+			"By this time, I had explored various fields and gained experience in all of them. I was still developing custom images for Windows on TeamOS and gained a huge reputation there, with my work being reposted across several websites and YouTube channels. Later, I started a YouTube channel focused on PC tweaks, reaching a point where I could monetize it. In my final years of high school, my skills were widely recognized, making me popular both for my YouTube channel and my programming abilities. I even worked for my school's IT department.",
+	},
+	{
+		year: 2020,
+		content:
+			"During the COVID pandemic, I contributed to a Dockergo project on GitHub which was later archived into GitHub Arctic Code Vault, earning me an Arctic Code Contributor badge. I was invited to Google's secret hiring process known as 'Foobar,' a covert recruitment method used to identify top developers worldwide. Although I saved the invitation for potential future use, I did not participate at that time. Later, I freelanced for a friend's immigration company, developing a C# IELTS training software, and automated my home with a Raspberry Pi.",
+	},
+	{
+		year: 2021,
+		content:
+			"In October, I moved to Canada and enrolled at Centennial College to study AI.",
+	},
+	{
+		year: 2022,
+		content:
+			"With studies being online, I focused on personal projects and developed 'Custom Fan Helios,' a project for Acer laptops that gained significant traction. It was shared across YouTube, Discord, and Reddit, earning me community contributor status. I also worked on building my portfolio.",
+	},
+	{
+		year: 2023,
+		content:
+			"At 20, I landed my first Software Engineering job at Sun Glow Window Coverings in January which was a huge achievement for me as a young individual. I developed an Encoder-Decoder transformer model from scratch, inspired by Google's research paper, and spent much of my time reading and researching to deepen my understanding of AI.",
+	},
+	{
+		year: 2024,
+		content:
+			"I have worked over a year, overseeing all development projects. I spearheaded the creation of two major websites, developed a machine learning model, and designed several Python automation scripts. My work in automating processes has significantly improved efficiency across the company. As I continue to innovate and lead the team, I look forward to tackling new challenges and driving further success.",
+	},
+];
+
 const Home = () => {
 	const [texts, setTexts] = useState<any>({
 		banner: loadingText,
@@ -171,81 +225,81 @@ const Home = () => {
 	}
 	const [isAnimating, setIsAnimating] = useState(false); // Track animation status
 
-	useEffect(() => {
-		const sections = document.querySelectorAll("section");
-		const headerHeight = document.querySelector("header")?.offsetHeight || 0;
+	// useEffect(() => {
+	// 	const sections = document.querySelectorAll("section");
+	// 	const headerHeight = document.querySelector("header")?.offsetHeight || 0;
 
-		const getCurrentSectionIndex = () => {
-			const scrollPosition = window.scrollY + headerHeight;
-			let index = 0;
-			sections.forEach((section, i) => {
-				if (section.offsetTop <= scrollPosition) {
-					index = i;
-				}
-			});
-			return index;
-		};
+	// 	const getCurrentSectionIndex = () => {
+	// 		const scrollPosition = window.scrollY + headerHeight;
+	// 		let index = 0;
+	// 		sections.forEach((section, i) => {
+	// 			if (section.offsetTop <= scrollPosition) {
+	// 				index = i;
+	// 			}
+	// 		});
+	// 		return index;
+	// 	};
 
-		const smoothScroll = (index: number, offsetDeduction: number) => {
-			const targetSection = sections[index];
-			if (targetSection) {
-				setIsAnimating(true); // Start animation
-				gsap.to(window, {
-					scrollTo: {
-						y: targetSection.offsetTop - offsetDeduction,
-						autoKill: false,
-					},
-					duration: 1,
-					ease: "power2.out",
-					onComplete: () => setIsAnimating(false), // End animation
-				});
-			}
-		};
+	// 	const smoothScroll = (index: number, offsetDeduction: number) => {
+	// 		const targetSection = sections[index];
+	// 		if (targetSection) {
+	// 			setIsAnimating(true); // Start animation
+	// 			gsap.to(window, {
+	// 				scrollTo: {
+	// 					y: targetSection.offsetTop - offsetDeduction,
+	// 					autoKill: false,
+	// 				},
+	// 				duration: 1,
+	// 				ease: "power2.out",
+	// 				onComplete: () => setIsAnimating(false), // End animation
+	// 			});
+	// 		}
+	// 	};
 
-		let lastScrollTime = 0;
-		const throttleDelay = 150; // Throttle delay in milliseconds
+	// 	let lastScrollTime = 0;
+	// 	const throttleDelay = 150; // Throttle delay in milliseconds
 
-		const handleWheel = (e: WheelEvent) => {
-			e.preventDefault(); // Prevent default scrolling behavior
+	// 	const handleWheel = (e: WheelEvent) => {
+	// 		e.preventDefault(); // Prevent default scrolling behavior
 
-			const currentTime = Date.now();
-			if (currentTime - lastScrollTime < throttleDelay || isAnimating) {
-				return; // Ignore events if animation is in progress or if throttle delay is not met
-			}
-			lastScrollTime = currentTime;
+	// 		const currentTime = Date.now();
+	// 		if (currentTime - lastScrollTime < throttleDelay || isAnimating) {
+	// 			return; // Ignore events if animation is in progress or if throttle delay is not met
+	// 		}
+	// 		lastScrollTime = currentTime;
 
-			const currentIndex = getCurrentSectionIndex();
-			const numSections = sections.length;
+	// 		const currentIndex = getCurrentSectionIndex();
+	// 		const numSections = sections.length;
 
-			if (e.deltaY > 0) {
-				// Scrolling down
-				if (currentIndex < numSections - 1) {
-					smoothScroll(currentIndex + 1, headerHeight);
-				}
-			} else if (e.deltaY < 0) {
-				// Scrolling up
-				if (currentIndex > 0) {
-					smoothScroll(currentIndex - 1, headerHeight);
-				} else {
-					// Optional: Scroll to the very top of the page
-					gsap.to(window, {
-						scrollTo: {
-							y: 0,
-							autoKill: false,
-						},
-						duration: 1,
-						ease: "power2.out",
-					});
-				}
-			}
-		};
+	// 		if (e.deltaY > 0) {
+	// 			// Scrolling down
+	// 			if (currentIndex < numSections - 1) {
+	// 				smoothScroll(currentIndex + 1, headerHeight);
+	// 			}
+	// 		} else if (e.deltaY < 0) {
+	// 			// Scrolling up
+	// 			if (currentIndex > 0) {
+	// 				smoothScroll(currentIndex - 1, headerHeight);
+	// 			} else {
+	// 				// Optional: Scroll to the very top of the page
+	// 				gsap.to(window, {
+	// 					scrollTo: {
+	// 						y: 0,
+	// 						autoKill: false,
+	// 					},
+	// 					duration: 1,
+	// 					ease: "power2.out",
+	// 				});
+	// 			}
+	// 		}
+	// 	};
 
-		window.addEventListener("wheel", handleWheel, { passive: false });
+	// 	window.addEventListener("wheel", handleWheel, { passive: false });
 
-		return () => {
-			window.removeEventListener("wheel", handleWheel);
-		};
-	}, [isAnimating]);
+	// 	return () => {
+	// 		window.removeEventListener("wheel", handleWheel);
+	// 	};
+	// }, [isAnimating]);
 
 	useEffect(() => {
 		const animateDivs = async () => {
@@ -314,11 +368,40 @@ const Home = () => {
 		<>
 			<CyberpunkBanner text={texts.banner} />
 
+			<section id="journey" className={`section-about animate-on-scroll`}>
+				<h2>My Journey So Far Since The Age Of 14</h2>
+				<h3 className="journey-text">This is what makes me who I am today.</h3>
+				<VerticalTimeline>
+					{timelineData.map((data, index) => (
+						<VerticalTimelineElement
+							key={index}
+							className="vertical-timeline-element--work"
+							contentStyle={{
+								background: "#ff7f00",
+								color: "#fff",
+							}}
+							contentArrowStyle={{
+								borderRight: "7px solid  #ff7f00",
+							}}
+							date={data.year}
+						>
+							<p
+								style={{
+									fontSize: "1.2rem",
+								}}
+							>
+								{data.content}
+							</p>
+						</VerticalTimelineElement>
+					))}
+				</VerticalTimeline>
+			</section>
 			<section id="askme" className={`section-askme animate-on-scroll`}>
 				<div className="container">
-					<h2>Now, why don&apos;t you try asking me something?</h2>
+					<h2>Why don&apos;t you try asking me something?</h2>
 					<h3>
-						If you have questions, I got answers. Probably.
+						I will answer your questions in real-time. Just type in the box
+						below.
 						<br />
 						<input
 							type="text"
@@ -333,12 +416,25 @@ const Home = () => {
 						<br />
 						<ReactMarkdown>{askme}</ReactMarkdown>
 					</h3>
+					<hr />
+					<h3 style={{ textAlign: "center", marginTop: "20px" }}>
+						If you are interested in viewing my resume, click the button below.
+					</h3>
+					<div className="resume-button">
+						<a
+							className="glitch-button"
+							href="/images/resume.pdf"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Click here to view my resume
+						</a>
+					</div>
 				</div>
 			</section>
-
 			<section id="about" className={`section-about animate-on-scroll`}>
 				<div className="container">
-					<h2>Who Am I, Really?</h2>
+					<h2>Who Am I, And What I Want To Achieve?</h2>
 					<h3 className="goal-text">
 						<div className="about-content">
 							<Image
@@ -356,34 +452,9 @@ const Home = () => {
 					</h3>
 				</div>
 			</section>
-
-			<section id="goal" className={`section-goal animate-on-scroll`}>
-				<div className="container">
-					<h2>
-						Before you go explore my skills, wanna know about what I want to
-						achieve?
-					</h2>
-					<h3 className="goal-text">
-						<ReactMarkdown>{texts.goal}</ReactMarkdown>
-						<div className="resume-button">
-							<br />
-
-							<a
-								className="glitch-button"
-								href="/images/resume.pdf"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								Click here to view my resume
-							</a>
-						</div>
-					</h3>
-				</div>
-			</section>
-
 			<section id="skills" className={`section-skills animate-on-scroll`}>
 				<div className="container">
-					<h2>Wondering what makes me different?</h2>
+					<h2>My Skill Set</h2>
 					<h3>
 						<ReactMarkdown>{texts.skills}</ReactMarkdown>
 					</h3>
