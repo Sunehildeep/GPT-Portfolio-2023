@@ -1,230 +1,491 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Hero from "../Hero";
-import { getAnswer } from "@/services/gpt";
-import Section from "../Section";
-import {
-	Card,
-	CardBody,
-	CardHeader,
-	Image,
-	Input,
-	Link,
-} from "@nextui-org/react";
-import { prompts } from "./prompts";
-import { projects } from "./projects";
-import ReactMarkdown from "react-markdown";
+import CyberpunkBanner from "../components/Banner";
 import { gsap } from "gsap";
+import { getAnswer } from "../services/gpt";
+import Project from "../components/Project";
+import ReactMarkdown from "react-markdown";
+import Image from "next/image";
 import { saveDetails } from "@/services/tracker";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import {
+	VerticalTimeline,
+	VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
 
-type Section = {
-	id: string;
-	title: string;
-	description: string | JSX.Element;
-	showAvatar?: boolean;
-};
+gsap.registerPlugin(ScrollToPlugin);
 
-export default function Home() {
-	const [banner, setBanner] = useState<string>("");
-	const [askme, setAskme] = useState<string>("");
-	const [sections, setSections] = useState<Section[]>([
-		{
-			id: "aboutme",
-			title: "Who am I, really?",
-			description: "",
-			showAvatar: true,
-		},
-		{
-			id: "mygoal",
-			title:
-				"Would you like to know my goal? Or you can scroll ahead if you don't care.",
-			description: "",
-		},
-		{
-			id: "myskills",
-			title: "What makes me special?",
-			description: "",
-		},
-		{
-			id: "myprojects",
-			title: "The things I developed in a young age.",
-			description: (
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					{projects.map((project) => (
-						<div
-							className="rounded-lg p-2 md:p-4 min-h-[400px]"
-							key={project.title}
-						>
-							<Card className="p-2 md:p-4 w-full" isBlurred>
-								<CardHeader className="glitch-text">{project.title}</CardHeader>
-								<CardBody>
-									<p className="text-md md:text-lg text-gray-200 mt-4">
-										{project.description}
-									</p>
-									<Link href={project.link} className="text-blue-500">
-										{project.link}
-									</Link>
-									{project.image && (
-										<Image src={project.image} alt={project.title} />
-									)}
-								</CardBody>
-							</Card>
-						</div>
-					))}
-				</div>
-			),
-		},
-		{
-			id: "contactme",
-			title: "Want to reach out to me?",
-			description: "",
-		},
-	]);
+export const projects = [
+	{
+		title: "Transformer Encoder-Decoder Model",
+		description:
+			"An encoder-decoder transformer text generative model made from scratch based on the paper 'Attention is All You Need'.",
+		image: "/images/proj0.png",
+		link: "https://github.com/Sunehildeep/ChatBot-TransformerAI",
+	},
+	{
+		title: "Text Generation Model",
+		description:
+			"A fully scratch decoder-only text generative model that is capable of generating text based on what it is trained upon. For my project, I used song lyrics.",
+		image: "/images/proj1.png",
+		link: "https://github.com/Sunehildeep/Text-Generator-AI-Model",
+	},
+	{
+		title: "Graph Prediction Model",
+		description:
+			"This model predicts the future graph of user engagement time from google analytics.",
+		image: "/images/proj2.png",
+		link: "https://github.com/Sunehildeep/AutoRegressiveModel",
+	},
+	{
+		title: "Chat-React",
+		description:
+			"Chat-React is a real-time messaging application built with React, MySQL, and Socket.io. It allows users to send private messages to each other, search for users, and initiate conversations. The application provides a seamless messaging experience with real-time updates, message status indicators, and delivery timestamps.",
+		image: "/images/proj5.png",
+		link: "https://github.com/Sunehildeep/Chat-React",
+	},
+	{
+		title: "Custom Fans For Acer Helios",
+		description:
+			"This program allows you to make a custom fan curve for helios. Works for both CPU and GPU fan independently. Being used currently by unofficial Acer community on Discord.",
+		image: "/images/proj3.png",
+		link: "https://github.com/Sunehildeep/Custom-Fans-Helios",
+	},
+	{
+		title: "Auto Max Fans For Acer Helios",
+		description:
+			"This little program allows you to customize fan temperature threshold automatically so that when the laptop overheats, it goes to max fans and back to auto when it cools down. Being used currently by unofficial Acer community on Discord.",
+		image: "/images/proj4.png",
+		link: "https://github.com/Sunehildeep/Auto-Max-Fans-Helios",
+	},
+	{
+		title: "Eye Tracker",
+		description:
+			"A simple eye-tracker script made in python. It tracks the eyes and draws a rectangle around them in every frame of your camera.",
+		link: "https://github.com/Sunehildeep/Eye-Tracker",
+	},
+	{
+		title: "Spam Detector Model",
+		description:
+			"A model that detects spam messages using Natural Language Processing.",
+		link: "https://github.com/Sunehildeep/Spam-Detector",
+	},
+	{
+		title: "Event System For SA:MP",
+		description: "This is an event system that works for SA:MP servers.",
+		link: "https://github.com/Sunehildeep/EventSystem",
+	},
+	{
+		title: "Weapons Hack Detector For SA:MP",
+		description:
+			"As the name suggests, this is a weapons hack detector for SA:MP servers. One of my first projects.",
+		link: "https://github.com/Sunehildeep/OnPlayerWeaponsHack",
+	},
+	{
+		title: "Quick Turn Hack Detector For SA:MP",
+		description:
+			"As the name suggests, this is a quick turn hack detector for SA:MP servers. One of my first projects.",
+		link: "https://github.com/Sunehildeep/OnPlayerQuickTurn",
+	},
+];
 
-	const handleQuestion = async (question: string) => {
-		try {
-			let collectiveText = "";
-			for await (const chunk of await getAnswer(question)) {
-				setAskme((old) => old + chunk);
-				collectiveText += chunk;
-			}
-			saveDetails(`Asked: ${question} | Answered: ${collectiveText}`);
-		} catch (error) {
-			setAskme("Resource limit exceeded. Please try again later.");
-		}
-	};
+const loadingText = "Please wait for a few seconds for the text to load... ";
+const prompts = [
+	{
+		type: "banner",
+		prompt:
+			"Create a playful banner message that lets visitors know all text is being generated by AI. Emphasize that they should hang tight because the content will be worth the wait. Mention it's powered by Google Gemini with a humorous twist.",
+	},
+	{
+		type: "aboutMe",
+		prompt:
+			"Write a fun and engaging biography of Sunehildeep Singh. Highlight his educational background, professional experiences, and passions with a touch of humor. Make it clear who he is, but keep it light and relatable. Describe Sunehildeep Singh's life goals and aspirations with a casual, conversational tone. Outline his vision for his career and personal life in a way that feels genuine and a bit cheeky.",
+	},
+	// {
+	// 	type: "goal",
+	// 	prompt:
+	// 		"Describe Sunehildeep Singh's life goals and aspirations with a casual, conversational tone. Outline his vision for his career and personal life in a way that feels genuine and a bit cheeky.",
+	// },
+	{
+		type: "skills",
+		prompt:
+			"List Sunehildeep Singh's skills in a structured way. Showcase his expertise with bullet points. Keep it concise and engaging.",
+	},
+	{
+		type: "contact",
+		prompt:
+			"Provide contact information for Sunehildeep Singh with a friendly and approachable tone. Make it easy to find and use, and add a touch of personality to invite potential collaborators or inquiries.",
+	},
+];
+
+const timelineData = [
+	{
+		year: 2016,
+		content:
+			"At 14, I learned my first programming language, Pawn, used for SA:MP servers, within just 3 months. Shortly after, I also picked up PHP.",
+	},
+	{
+		year: 2017,
+		content:
+			"I became a reputable member of the SA:MP community, contributing by helping others and creating content. I established my own community, which grew to 100+ members, and managed a team of Admins, Managers, Moderators, Testers, Designers, and Programmers. I also created my first GitHub repository and expanded my skill set by learning Python, C#, Java, and JavaScript. I developed websites, user control panels, game scripts, and made significant community contributions. I also learned Photoshop and video editing, honing my skills in leadership, marketing, programming, and design.",
+	},
+	{
+		year: 2018,
+		content:
+			"I created widely-used scripts for the SA:MP community and launched a startup called Honor Gaming Studios with online friends. Although we had to shut it down due to school commitments, the experience was incredibly valuable as I had learned Game Programming as well. Later that year, I began learning Docker, Golang, and TensorFlow as I delved into AI. I also started making Custom Windows Images specially tweaked for gaming and performance by researching improvements and released them on TeamOS.",
+	},
+	{
+		year: 2019,
+		content:
+			"By this time, I had explored various fields and gained experience in all of them. I was still developing custom images for Windows on TeamOS and gained a huge reputation there, with my work being reposted across several websites and YouTube channels. Later, I started a YouTube channel focused on PC tweaks, reaching a point where I could monetize it. In my final years of high school, my skills were widely recognized, making me popular both for my YouTube channel and my programming abilities. I even worked for my school's IT department.",
+	},
+	{
+		year: 2020,
+		content:
+			"During the COVID pandemic, I contributed to a Dockergo project on GitHub which was later archived into GitHub Arctic Code Vault, earning me an Arctic Code Contributor badge. I was invited to Google's secret hiring process known as 'Foobar,' a covert recruitment method used to identify top developers worldwide. Although I saved the invitation for potential future use, I did not participate at that time. Later, I freelanced for a friend's immigration company, developing a C# IELTS training software, and automated my home with a Raspberry Pi.",
+	},
+	{
+		year: 2021,
+		content:
+			"In October, I moved to Canada and enrolled at Centennial College to study AI.",
+	},
+	{
+		year: 2022,
+		content:
+			"With studies being online, I focused on personal projects and developed 'Custom Fan Helios,' a project for Acer laptops that gained significant traction. It was shared across YouTube, Discord, and Reddit, earning me community contributor status. I also worked on building my portfolio.",
+	},
+	{
+		year: 2023,
+		content:
+			"At 20, I landed my first Software Engineering job at Sun Glow Window Coverings in January which was a huge achievement for me as a young individual. I developed an Encoder-Decoder transformer model from scratch, inspired by Google's research paper, and spent much of my time reading and researching to deepen my understanding of AI.",
+	},
+	{
+		year: 2024,
+		content:
+			"I have worked over a year, overseeing all development projects. I spearheaded the creation of two major websites, developed a machine learning model, and designed several Python automation scripts. My work in automating processes has significantly improved efficiency across the company. As I continue to innovate and lead the team, I look forward to tackling new challenges and driving further success.",
+	},
+];
+
+const Home = () => {
+	const [texts, setTexts] = useState<any>({
+		banner: loadingText,
+		aboutMe: loadingText,
+		goal: loadingText,
+		skills: loadingText,
+		contact: loadingText,
+	});
+
+	const [askme, setAskMe] = useState("");
 
 	const getPromptJson = async () => {
 		try {
 			await Promise.all(
-				prompts.map(async (prompt: Prompt) => {
+				prompts.map(async (prompt: any) => {
 					for await (const chunk of await getAnswer(prompt.prompt)) {
-						if (prompt.type === "banner") {
-							setBanner((banner) => {
-								setSections((sections) =>
-									sections.map((section) => {
-										if (section.id === prompt.type) {
-											return {
-												...section,
-												description: <Hero text={banner + chunk} />,
-											};
-										}
-										return section;
-									})
-								);
-								return banner + chunk;
-							});
-						}
-						setSections((sections) =>
-							sections.map((section) => {
-								if (section.id === prompt.type) {
-									return {
-										...section,
-										description: section.description + chunk,
-									};
-								}
-								return section;
-							})
-						);
+						setTexts((texts: any) => ({
+							...texts,
+							[prompt.type]: texts[prompt.type]
+								? texts[prompt.type].replace(loadingText, "") + chunk
+								: chunk,
+						}));
 					}
 				})
 			);
 		} catch (error) {
 			console.error(error);
-			// alert("Resource limit exceeded. Ple ase try again later.");
+			alert("Resource limit exceeded. Please try again later.");
 		}
 	};
 
 	useEffect(() => {
-		getPromptJson();
+		async function fetchResponses() {
+			try {
+				await getPromptJson();
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		fetchResponses();
 	}, []);
 
+	async function handleQuestion(query: string) {
+		try {
+			setAskMe("Thinking...");
+			const text = [];
+			for await (const chunk of getAnswer(query)) {
+				setAskMe((prev) => prev + chunk);
+				text.push(chunk);
+			}
+			saveDetails(`User: ${query}\n${text.join("")}`);
+		} catch (error) {
+			console.error(error);
+			setAskMe("Sorry, I am unable to answer that right now.");
+		}
+	}
+	const [isAnimating, setIsAnimating] = useState(false); // Track animation status
+
+	// useEffect(() => {
+	// 	const sections = document.querySelectorAll("section");
+	// 	const headerHeight = document.querySelector("header")?.offsetHeight || 0;
+
+	// 	const getCurrentSectionIndex = () => {
+	// 		const scrollPosition = window.scrollY + headerHeight;
+	// 		let index = 0;
+	// 		sections.forEach((section, i) => {
+	// 			if (section.offsetTop <= scrollPosition) {
+	// 				index = i;
+	// 			}
+	// 		});
+	// 		return index;
+	// 	};
+
+	// 	const smoothScroll = (index: number, offsetDeduction: number) => {
+	// 		const targetSection = sections[index];
+	// 		if (targetSection) {
+	// 			setIsAnimating(true); // Start animation
+	// 			gsap.to(window, {
+	// 				scrollTo: {
+	// 					y: targetSection.offsetTop - offsetDeduction,
+	// 					autoKill: false,
+	// 				},
+	// 				duration: 1,
+	// 				ease: "power2.out",
+	// 				onComplete: () => setIsAnimating(false), // End animation
+	// 			});
+	// 		}
+	// 	};
+
+	// 	let lastScrollTime = 0;
+	// 	const throttleDelay = 150; // Throttle delay in milliseconds
+
+	// 	const handleWheel = (e: WheelEvent) => {
+	// 		e.preventDefault(); // Prevent default scrolling behavior
+
+	// 		const currentTime = Date.now();
+	// 		if (currentTime - lastScrollTime < throttleDelay || isAnimating) {
+	// 			return; // Ignore events if animation is in progress or if throttle delay is not met
+	// 		}
+	// 		lastScrollTime = currentTime;
+
+	// 		const currentIndex = getCurrentSectionIndex();
+	// 		const numSections = sections.length;
+
+	// 		if (e.deltaY > 0) {
+	// 			// Scrolling down
+	// 			if (currentIndex < numSections - 1) {
+	// 				smoothScroll(currentIndex + 1, headerHeight);
+	// 			}
+	// 		} else if (e.deltaY < 0) {
+	// 			// Scrolling up
+	// 			if (currentIndex > 0) {
+	// 				smoothScroll(currentIndex - 1, headerHeight);
+	// 			} else {
+	// 				// Optional: Scroll to the very top of the page
+	// 				gsap.to(window, {
+	// 					scrollTo: {
+	// 						y: 0,
+	// 						autoKill: false,
+	// 					},
+	// 					duration: 1,
+	// 					ease: "power2.out",
+	// 				});
+	// 			}
+	// 		}
+	// 	};
+
+	// 	window.addEventListener("wheel", handleWheel, { passive: false });
+
+	// 	return () => {
+	// 		window.removeEventListener("wheel", handleWheel);
+	// 	};
+	// }, [isAnimating]);
+
 	useEffect(() => {
-		saveDetails("Home Page Visited");
-		const sectionElements = document.querySelectorAll("section");
-		if (!sectionElements.length) return;
-		const setAnimations = async () => {
+		const animateDivs = async () => {
+			// Add the ScrollMagic library initialization code
 			const ScrollMagic = (await import("scrollmagic")).default;
 			const scrollMagicController = new ScrollMagic.Controller();
+			const scrollMagicElements =
+				document.querySelectorAll(".animate-on-scroll");
 
-			sectionElements.forEach((sectionElement) => {
+			// Another scene for userpic
+			new ScrollMagic.Scene({
+				triggerElement: "#userpic",
+				triggerHook: 0.8,
+				reverse: true,
+			})
+				.on("enter", () => {
+					gsap.to("#userpic", { opacity: 1, scale: 1.0, duration: 1 });
+				})
+				.on("leave", () => {
+					gsap.to("#userpic", { opacity: 0, scale: 0, duration: 1 });
+				})
+				.addTo(scrollMagicController);
+
+			// Slow loading for project
+			const projectElements = document.querySelectorAll(".project");
+			projectElements.forEach((element) => {
 				new ScrollMagic.Scene({
-					triggerElement: sectionElement,
+					triggerElement: element,
+					triggerHook: 1.0,
+					reverse: true,
+				})
+					.on("enter", () => {
+						gsap.to(element, { opacity: 1, y: 0, x: 0, duration: 0.2 });
+					})
+					.on("leave", () => {
+						gsap.to(element, { opacity: 0, y: 100, x: -100, duration: 0.2 });
+					})
+					.addTo(scrollMagicController);
+			});
+
+			scrollMagicElements.forEach((element) => {
+				new ScrollMagic.Scene({
+					triggerElement: element,
 					triggerHook: 0.8,
 					reverse: true,
 				})
 					.on("enter", () => {
-						gsap.to(sectionElement, {
-							opacity: 1,
-							y: 0,
-							x: 0,
-							duration: 1,
-							ease: "power4.out", // Ease out for entering
-						});
+						gsap.to(element, { opacity: 1, y: 0, x: 0, duration: 1 });
 					})
 					.on("leave", () => {
-						gsap.to(sectionElement, {
-							opacity: 0,
-							y: 100,
-							x: -100,
-							duration: 1,
-							ease: "power4.in", // Ease in for leaving
-						});
+						gsap.to(element, { opacity: 0, y: 100, x: -100, duration: 1 });
 					})
 					.addTo(scrollMagicController);
 			});
-			// Remove hidden class
-			document.getElementById("geminiSections")?.classList.remove("hidden");
+
 			return scrollMagicController;
 		};
-
-		const destroyController = async (controller: any) => {
-			await controller.destroy();
-		};
-
-		const controller = setAnimations() || undefined;
+		const controller: any = animateDivs();
 		return () => {
-			if (controller) destroyController(controller);
+			// Clean up ScrollMagic controller when component unmounts
+			if (controller) controller.destroy(true);
 		};
 	}, []);
 
 	return (
 		<>
-			<Hero text={banner} />
-			<div id="geminiSections" className="hidden">
-				<Section
-					id="askme"
-					title="Ask Me Anything"
-					description={
-						<div className="flex flex-col items-center gap-2">
-							<h2>If you have questions, I got answers. Probably.</h2>
+			<CyberpunkBanner text={texts.banner} />
 
-							<Input
-								type="askme"
-								label="Ask me anything"
-								onKeyDown={async (e) => {
-									if (e.key === "Enter") {
-										handleQuestion(e.currentTarget.value);
-										e.currentTarget.value = "";
-									}
+			<section id="journey" className={`section-about animate-on-scroll`}>
+				<h2>My Journey So Far Since The Age Of 14</h2>
+				<h3 className="journey-text">This is what makes me who I am today.</h3>
+				<VerticalTimeline>
+					{timelineData.map((data, index) => (
+						<VerticalTimelineElement
+							key={index}
+							className="vertical-timeline-element--work"
+							contentStyle={{
+								background: "#ff7f00",
+								color: "#fff",
+							}}
+							contentArrowStyle={{
+								borderRight: "7px solid  #ff7f00",
+							}}
+							date={data.year}
+						>
+							<p
+								style={{
+									fontSize: "1.2rem",
 								}}
+							>
+								{data.content}
+							</p>
+						</VerticalTimelineElement>
+					))}
+				</VerticalTimeline>
+			</section>
+			<section id="askme" className={`section-askme animate-on-scroll`}>
+				<div className="container">
+					<h2>Why don&apos;t you try asking me something?</h2>
+					<h3>
+						I will answer your questions in real-time. Just type in the box
+						below.
+						<br />
+						<input
+							type="text"
+							placeholder="Ask me anything"
+							className="askme-input"
+							onKeyDown={async (e: any) => {
+								if (e.key === "Enter") {
+									handleQuestion(e.target.value);
+								}
+							}}
+						/>
+						<br />
+						<ReactMarkdown>{askme}</ReactMarkdown>
+					</h3>
+					<hr />
+					<h3 style={{ textAlign: "center", marginTop: "20px" }}>
+						If you are interested in viewing my resume, click the button below.
+					</h3>
+					<div className="resume-button">
+						<a
+							className="glitch-button"
+							href="/images/resume.pdf"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Click here to view my resume
+						</a>
+					</div>
+				</div>
+			</section>
+			<section id="about" className={`section-about animate-on-scroll`}>
+				<div className="container">
+					<h2>Who Am I, And What I Want To Achieve?</h2>
+					<h3 className="goal-text">
+						<div className="about-content">
+							<Image
+								width={100}
+								height={100}
+								id="userpic"
+								src="/images/me.jpg"
+								alt="Profile"
+								className="profile-image animate-on-scroll"
 							/>
-							<ReactMarkdown>{askme}</ReactMarkdown>
+							<span className="about-text">
+								<ReactMarkdown>{texts.aboutMe}</ReactMarkdown>
+							</span>
 						</div>
-					}
-				/>
+					</h3>
+				</div>
+			</section>
+			<section id="skills" className={`section-skills animate-on-scroll`}>
+				<div className="container">
+					<h2>My Skill Set</h2>
+					<h3>
+						<ReactMarkdown>{texts.skills}</ReactMarkdown>
+					</h3>
+				</div>
+			</section>
 
-				{sections.map((section: Section, index: number) => (
-					<Section
-						key={section.title}
-						id={section.id}
-						title={section.title}
-						description={section.description}
-						isGray={index % 2 === 0}
-						showAvatar={section.showAvatar}
-					/>
-				))}
-			</div>
+			<section id="projects" className={`section-projects animate-on-scroll`}>
+				<div className="container">
+					<h2>The things I have developed in a young age</h2>
+					<h3>
+						Here are some of my projects that I have worked on. Click on them to
+						view the source code.
+						<br />
+						<br />
+						{projects.map((project, id) => (
+							<Project key={id} {...project} />
+						))}
+					</h3>
+				</div>
+			</section>
+
+			<section id="contact" className={`section-contact animate-on-scroll`}>
+				<div className="container">
+					<h2>Interested to talk to me instead of an AI?</h2>
+					<h3>
+						<ReactMarkdown>{texts.contact}</ReactMarkdown>
+					</h3>
+				</div>
+			</section>
 		</>
 	);
-}
+};
+
+export default Home;
