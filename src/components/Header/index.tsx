@@ -9,7 +9,7 @@ import {
 	NavbarMenu,
 	NavbarMenuItem,
 	Avatar,
-	Link as NextUILink
+	Link as NextUILink,
 } from "@nextui-org/react";
 import { navItems } from "./items";
 import { Link } from "react-scroll";
@@ -42,17 +42,20 @@ export default function Header() {
 			<NavbarContent className="hidden sm:flex gap-8" justify="center">
 				{navItems.map((item: NavItem, index: number) => (
 					<NavbarItem key={`${item}-${index}`}>
-						{item.name === "Resume" ? <NextUILink href={item.href}>{item.name}</NextUILink> : 
+						{item.name === "Resume" ? (
+							<NextUILink href={item.href}>{item.name}</NextUILink>
+						) : (
 							<Link
-							smooth={true}
-							duration={500}
-							offset={-200}
-							color="foreground"
-							to={item.href}
-							className="cursor-pointer"
-						>
-							{item.name}
-						</Link>}
+								smooth={true}
+								duration={500}
+								offset={-200}
+								color="foreground"
+								to={item.href}
+								className="cursor-pointer"
+							>
+								{item.name}
+							</Link>
+						)}
 					</NavbarItem>
 				))}
 			</NavbarContent>
@@ -60,17 +63,20 @@ export default function Header() {
 			<NavbarMenu>
 				{navItems.map((item: NavItem, index: number) => (
 					<NavbarMenuItem key={`${item}-${index}`}>
-						{item.name === "Resume" ? <NextUILink href={item.href}>{item.name}</NextUILink> : 
+						{item.name === "Resume" ? (
+							<NextUILink href={item.href}>{item.name}</NextUILink>
+						) : (
 							<Link
-							smooth={true}
-							duration={500}
-							color={"foreground"}
-							className="w-full cursor-pointer text-white "
-							to={item.href}
-							onClick={() => setIsMenuOpen(false)}
-						>
-							{item.name}
-						</Link>}
+								smooth={true}
+								duration={500}
+								color={"foreground"}
+								className="w-full cursor-pointer text-white "
+								to={item.href}
+								onClick={() => setIsMenuOpen(false)}
+							>
+								{item.name}
+							</Link>
+						)}
 					</NavbarMenuItem>
 				))}
 			</NavbarMenu>

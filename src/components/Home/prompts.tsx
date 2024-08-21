@@ -7,13 +7,9 @@ export const prompts: Prompt[] = [
 	{
 		type: "aboutme",
 		prompt:
-			"Write a fun and engaging biography of Sunehildeep Singh. Highlight his educational background, professional experiences, and passions with a touch of humor. Make it clear who he is, but keep it light and relatable.",
+			"Write a fun and engaging biography of Sunehildeep Singh. Highlight his educational background, professional experiences, and passions with a touch of humor. Make it clear who he is, but keep it light and relatable. Describe Sunehildeep Singh's life goals and aspirations with a casual, conversational tone. Outline his vision for his career and personal life in a way that feels genuine and a bit cheeky.",
 	},
-	{
-		type: "mygoal",
-		prompt:
-			"Describe Sunehildeep Singh's life goals and aspirations with a casual, conversational tone. Outline his vision for his career and personal life in a way that feels genuine and a bit cheeky.",
-	},
+
 	{
 		type: "myskills",
 		prompt:

@@ -19,9 +19,6 @@ export default function Hero({ text }: HeroProps) {
 		<div className="relative z-10 bg-black bg-opacity-50" id="banner">
 			<div className="max-w-2xl mx-auto min-h-screen flex items-center justify-center">
 				<Card isBlurred className="p-4 ">
-					<CardHeader className="glitch-text text-center">
-						This won&apos;t be like other portfolios you have seen.
-					</CardHeader>
 					<CardBody className="text-center">
 						<Card className="p-4 w-full space-y-3">
 							{!text ? (
@@ -43,8 +40,8 @@ export default function Hero({ text }: HeroProps) {
 					</CardBody>
 					<CardFooter>
 						<Button color="warning" size="md" className="text-white m-auto">
-							<Link to="askme" smooth={true} duration={500} offset={-200}>
-								You won&apos;t regret it.
+							<Link to="journey" smooth={true} duration={500} offset={-200}>
+								Explore My Journey
 							</Link>
 						</Button>
 					</CardFooter>
