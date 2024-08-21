@@ -249,47 +249,47 @@ export default function Home() {
 	return (
 		<>
 			<Hero text={banner} />
-			<div id="geminiSections" className="hidden">
-				<Section
-					id="journey"
-					title="My Journey So Far Since The Age Of 14"
-					description={
-						<div>
-							<h3 className="text-lg md:text-xl text-gray-200 text-center my-8 font-bold">
-								This is what makes me who I am today.
-							</h3>
-							<VerticalTimeline>
-								{timelineData.map((data: Timeline, index: number) => (
-									<VerticalTimelineElement
-										key={index}
-										className="vertical-timeline-element--work"
-										contentStyle={{
-											background: "#ff7f00",
-											color: "#fff",
-										}}
-										contentArrowStyle={{
-											borderRight: "7px solid  #ff7f00",
-										}}
-										date={data.year}
-									>
-										<p className="!text-md md:!text-lg text-gray-200">
-											{data.content}
-										</p>
-									</VerticalTimelineElement>
-								))}
-							</VerticalTimeline>
-							{/* Resume button */}
-							<div className="flex justify-center">
-								<Link
-									href="/images/resume.pdf"
-									className="cursor-pointer my-8 text-blue-500 bg-transparent border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-sm px-20 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+			<Section
+				id="journey"
+				title="My Journey So Far Since The Age Of 14"
+				description={
+					<div>
+						<h3 className="text-lg md:text-xl text-gray-200 text-center my-8 font-bold">
+							This is what makes me who I am today.
+						</h3>
+						<VerticalTimeline>
+							{timelineData.map((data: Timeline, index: number) => (
+								<VerticalTimelineElement
+									key={index}
+									className="vertical-timeline-element--work"
+									contentStyle={{
+										background: "#ff7f00",
+										color: "#fff",
+									}}
+									contentArrowStyle={{
+										borderRight: "7px solid  #ff7f00",
+									}}
+									date={data.year}
 								>
-									Resume
-								</Link>
-							</div>
+									<p className="!text-md md:!text-lg text-gray-200">
+										{data.content}
+									</p>
+								</VerticalTimelineElement>
+							))}
+						</VerticalTimeline>
+						{/* Resume button */}
+						<div className="flex justify-center">
+							<Link
+								href="/images/resume.pdf"
+								className="cursor-pointer my-8 text-blue-500 bg-transparent border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-sm px-20 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+							>
+								Resume
+							</Link>
 						</div>
-					}
-				/>
+					</div>
+				}
+			/>
+			<div id="geminiSections" className="hidden">
 				<Section
 					id="askme"
 					title="Ask Me Anything"
