@@ -280,7 +280,7 @@ export default function Home() {
 						{/* Resume button */}
 						<div className="flex justify-center">
 							<Link
-								href="/images/SunehildeepSingh_Reusme.pdf"
+								href="/images/SunehildeepSingh_Resume.pdf"
 								className="cursor-pointer my-8 text-blue-500 bg-transparent border border-solid border-blue-500 hover:bg-blue-500 hover:text-white active:bg-blue-600 font-bold uppercase text-sm px-20 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
 							>
 								Resume

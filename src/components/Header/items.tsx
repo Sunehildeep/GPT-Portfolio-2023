@@ -5,7 +5,7 @@ export const navItems: NavItem[] = [
 	},
 	{
 		name: "Resume",
-		href: "/images/SunehildeepSingh_Reusme.pdf",
+		href: "/images/SunehildeepSingh_Resume.pdf",
 	},
 	{
 		name: "Ask Anything",
