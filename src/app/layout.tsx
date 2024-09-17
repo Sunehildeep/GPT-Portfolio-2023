@@ -56,7 +56,7 @@ With a strong foundation in software engineering and a keen interest in AI, Sune
 
 Graduating from Centennial College with a focus on Artificial Intelligence, Sunehildeep has leveraged his academic background to create impactful projects and contribute to the field. His expertise extends to developing sophisticated deep learning models and utilizing advanced techniques to drive innovation.
 
-Sunehildeep’s journey is marked by a continuous pursuit of knowledge and excellence, with a focus on harnessing the power of AI to push the boundaries of technology. As he continues to explore new frontiers in neural networks and deep learning, Sunehildeep remains dedicated to shaping the future of AI and inspiring others in the industry.
+Sunehildeep's journey is marked by a continuous pursuit of knowledge and excellence, with a focus on harnessing the power of AI to push the boundaries of technology. As he continues to explore new frontiers in neural networks and deep learning, Sunehildeep remains dedicated to shaping the future of AI and inspiring others in the industry.
 
 For insights into his work and to connect with him, visit his official website and follow his updates on LinkedIn, GitHub, and X.`,
 };
