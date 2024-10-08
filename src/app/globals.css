@@ -22,29 +22,3 @@
     text-wrap: balance;
   }
 }
-
-.glitch-text {
-  color: #fff;
-  font-size: 24px;
-  font-weight: 700;
-  animation: glitch 3s infinite;
-  text-align: center;
-}
-
-@keyframes glitch {
-  0% {
-    text-shadow: 0 0 4px #fff, 0 0 6px #0ff;
-  }
-  25% {
-    text-shadow: 2px -2px 4px #0ff, -2px 2px 6px #fff;
-  }
-  50% {
-    text-shadow: -2px 2px 4px #fff, 2px -2px 6px #0ff;
-  }
-  75% {
-    text-shadow: 2px -2px 4px #0ff, -2px 2px 6px #fff;
-  }
-  100% {
-    text-shadow: 0 0 4px #fff, 0 0 6px #0ff;
-  }
-}
