@@ -34,7 +34,7 @@ export default function Home() {
 			/>
 
 			<nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-20 bg-white/10 backdrop-blur-lg shadow-md rounded-full px-4 md;px-6 py-3 flex justify-center items-center space-x-6 w-auto">
-				<ul className="flex text-sm space-x-6 md:text-lg text-gray-300">
+				<ul className="flex text-sm space-x-6 md:text-lg text-gray-300 cursor-pointer">
 					<li>
 						<Link
 							smooth
