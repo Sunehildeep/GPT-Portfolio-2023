@@ -89,7 +89,7 @@ export default function Component() {
 					id="home"
 				>
 					<motion.div
-						className="text-center relative z-10 flex flex-col items-center space-y-8"
+						className="text-center relative z-10 flex flex-col items-center space-y-7"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 1 }}
@@ -104,7 +104,7 @@ export default function Component() {
 								className="rounded-full relative z-10 object-cover w-40 h-40"
 							/>
 						</div>
-						<h1 className="text-5xl md:text-7xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+						<h1 className="text-5xl md:text-7xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 p-2">
 							Sunehildeep Singh
 						</h1>
 						<ReactTyped
@@ -119,16 +119,16 @@ export default function Component() {
 							typeSpeed={50}
 							backSpeed={30}
 							loop
-							className="text-xl md:text-2xl text-emerald-300 mb-8"
+							className="text-xl md:text-2xl text-emerald-300 mb-8 p-2"
 						/>
-						<div className="flex space-x-6 items-center justify-center">
+						<div className="flex space-x-6 items-center justify-center p-2">
 							{socialLinks.map((link, index) => (
 								<a
 									key={index}
 									href={link.href}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-emerald-400 hover:text-emerald-300 hover:scale-110 transform transition-all duration-300"
+									className="text-emerald-400 hover:text-emerald-300 hover:scale-110 transform transition-all duration-300 "
 									title={link.tooltip}
 								>
 									{link.icon}
