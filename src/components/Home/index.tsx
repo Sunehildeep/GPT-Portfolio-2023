@@ -242,7 +242,11 @@ export default function Component() {
 									text: "LinkedIn",
 									href: "https://www.linkedin.com/in/sunehildeepsingh/",
 								},
-								{ icon: Paperclip, text: "Resume", href: "/resume.pdf" },
+								{
+									icon: Paperclip,
+									text: "Resume",
+									href: "/images/SunehildeepSingh_Resume.pdf",
+								},
 							].map((item, index) => (
 								<a
 									key={index}
