@@ -10,10 +10,12 @@ export const InputForm = () => {
 	const [response, setResponse] = useState("");
 
 	const askGpt = async () => {
+		let res = "";
 		for await (const chunk of getAnswer(input)) {
-			setResponse((prev) => prev + chunk);
+			res += chunk;
 		}
-		saveDetails("Asked: " + input + " | Answered: " + response);
+		saveDetails("Asked: " + input + " | Answered: " + res);
+		setResponse(res);
 	};
 
 	useEffect(() => {
@@ -38,10 +40,11 @@ export const InputForm = () => {
 					className="flex flex-col items-center gap-4"
 					onSubmit={(e) => {
 						e.preventDefault();
+						setResponse("Generating...");
 						askGpt();
 					}}
 				>
-					<div className="text-emerald-400 text-lg font-semibold mb-4">
+					<div className="text-emerald-400 text-md md:text-lg mb-4">
 						The AI Chatbot is a mini-me and can answer your questions related to
 						me :) Try asking about my experience, projects, or anything else!
 					</div>
