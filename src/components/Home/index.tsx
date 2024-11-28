@@ -10,6 +10,7 @@ import { ProjectCard } from "./ProjectCard";
 import { InputForm } from "./InputForm";
 import { projects, experiences, timelineData, socialLinks } from "./constants";
 import { TimelineCard } from "./TimelineCard";
+import { saveDetails } from "@/services/tracker";
 
 export default function Portfolio() {
 	const [activeSection, setActiveSection] = useState("home");
@@ -36,6 +37,7 @@ export default function Portfolio() {
 
 	// Improved scroll tracking
 	useEffect(() => {
+		saveDetails("Home page visited");
 		const options = {
 			root: null,
 			rootMargin: "-20% 0px -70% 0px", // Adjusted to better detect current section
