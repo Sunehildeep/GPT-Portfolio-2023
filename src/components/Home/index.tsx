@@ -390,7 +390,7 @@ export default function Portfolio() {
 								className="text-4xl font-bold text-center mb-16"
 							>
 								<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-									Let's Connect
+									Let&apos;s Connect
 								</span>
 							</motion.h2>
 
