@@ -1,41 +1,90 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { ReactTyped } from "react-typed";
-import { Github, Linkedin, Mail, Paperclip } from "lucide-react";
 import Image from "next/image";
-import { experiences, projects, socialLinks, timelineData } from "./constants";
+import { Github, Linkedin, Mail, Paperclip, ChevronDown } from "lucide-react";
 import { ExperienceCard } from "./ExperienceCard";
-import { TimelineCard } from "./TimelineCard";
 import { ProjectCard } from "./ProjectCard";
-import { saveDetails } from "@/services/tracker";
-import { Link } from "react-scroll";
 import { InputForm } from "./InputForm";
+import { projects, experiences, timelineData, socialLinks } from "./constants";
+import { TimelineCard } from "./TimelineCard";
 
-const sectionOffsets = [
-	"chat",
-	"experience",
-	"achievements",
-	"projects",
-	"contact",
-];
+export default function Portfolio() {
+	const [activeSection, setActiveSection] = useState("home");
+	const [isShrunk, setIsShrunk] = useState(false);
 
-export default function Component() {
-	const { scrollYProgress } = useScroll();
-	const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "150%"]);
-	const [activeSection, setActiveSection] = useState("chat");
-
-	const logDetails = async (log: string) => {
-		await saveDetails(log);
-	};
-
+	// Navbar shrink effect
 	useEffect(() => {
-		logDetails("Visited Home Page");
+		const handleScroll = () => {
+			setIsShrunk(window.scrollY > 50);
+		};
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
+	// Navigation links
+	const navLinks = [
+		{ name: "Home", id: "home" },
+		{ name: "Chat", id: "chat" },
+		{ name: "Experience", id: "experience" },
+		{ name: "Projects", id: "projects" },
+		{ name: "Journey", id: "journey" },
+		{ name: "Contact", id: "contact" },
+	];
+
+	// Improved scroll tracking
 	useEffect(() => {
-		// Check intersection observer for active section
+		const options = {
+			root: null,
+			rootMargin: "-20% 0px -70% 0px", // Adjusted to better detect current section
+			threshold: 0,
+		};
+
+		const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					setActiveSection(entry.target.id);
+				}
+			});
+		};
+
+		const observer = new IntersectionObserver(handleIntersect, options);
+
+		// Observe all sections
+		navLinks.forEach(({ id }) => {
+			const section = document.getElementById(id);
+			if (section) observer.observe(section);
+		});
+
+		return () => {
+			navLinks.forEach(({ id }) => {
+				const section = document.getElementById(id);
+				if (section) observer.unobserve(section);
+			});
+		};
+	}, []); // Empty dependency array as we want this to run once
+
+	// Scroll to section handler with offset
+	const scrollToSection = (sectionId: string) => {
+		const section = document.getElementById(sectionId);
+		if (section) {
+			const offset = 80; // Adjust based on navbar height
+			const bodyRect = document.body.getBoundingClientRect().top;
+			const elementRect = section.getBoundingClientRect().top;
+			const elementPosition = elementRect - bodyRect;
+			const offsetPosition = elementPosition - offset;
+
+			window.scrollTo({
+				top: offsetPosition,
+				behavior: "smooth",
+			});
+		}
+	};
+
+	// Intersection Observer for active section
+	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
@@ -44,229 +93,402 @@ export default function Component() {
 					}
 				});
 			},
-			{ threshold: 0.5 }
+			{
+				threshold: 0.3,
+				rootMargin: "-50% 0px -50% 0px",
+			}
 		);
 
-		sectionOffsets.forEach((section) => {
-			const el = document.getElementById(section);
-			if (el) {
-				observer.observe(el);
-			}
+		navLinks.forEach(({ id }) => {
+			const element = document.getElementById(id);
+			if (element) observer.observe(element);
 		});
 
-		return () => {
-			observer.disconnect();
-		};
-	}, [scrollYProgress]);
+		return () => observer.disconnect();
+	}, []);
 
 	return (
-		<div className="bg-gray-900 min-h-screen text-white overflow-x-hidden relative">
-			<motion.div
-				className="fixed inset-0 bg-gradient-to-b from-gray-900 via-emerald-900/20 to-gray-900"
-				style={{ y: backgroundY }}
-			/>
+		<div className="min-h-screen bg-[#0a0a0a] text-white">
+			{/* Navigation Bar */}
+			<motion.nav
+				className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+					isShrunk ? "py-4 bg-black/80 backdrop-blur-lg" : "py-6 bg-transparent"
+				}`}
+				initial={{ y: -100 }}
+				animate={{ y: 0 }}
+				transition={{ duration: 0.5 }}
+			>
+				<div className="container mx-auto px-6">
+					<div className="flex items-center justify-between">
+						<motion.span
+							className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"
+							whileHover={{ scale: 1.05 }}
+						>
+							Sunehildeep
+						</motion.span>
+						<div className="hidden md:flex space-x-8">
+							{navLinks.map((link) => (
+								<motion.button
+									key={link.id}
+									onClick={() => scrollToSection(link.id)}
+									className={`relative text-sm font-medium ${
+										activeSection === link.id
+											? "text-emerald-400"
+											: "text-gray-400"
+									} hover:text-emerald-400 transition-colors`}
+									whileHover={{ scale: 1.1 }}
+								>
+									{link.name}
+									{activeSection === link.id && (
+										<motion.div
+											className="absolute -bottom-1 left-0 right-0 h-0.5 bg-emerald-400"
+											layoutId="underline"
+										/>
+									)}
+								</motion.button>
+							))}
+						</div>
+					</div>
+				</div>
+			</motion.nav>
 
-			<nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-20 bg-black/50 backdrop-blur-lg shadow-neon rounded-full px-6 py-3 flex justify-center items-center space-x-3 md:space-x-6 w-auto">
-				{sectionOffsets.map((item) => (
-					<Link
-						key={item}
-						onClick={() => setActiveSection(item)}
-						to={item}
-						smooth
-						duration={500}
-						className={`text-sm md:text-lg ${
-							activeSection === item ? "text-emerald-400" : "text-emerald-600"
-						} hover:text-emerald-300 transition cursor-pointer`}
-					>
-						{item.charAt(0).toUpperCase() + item.slice(1)}
-					</Link>
-				))}
-			</nav>
-
-			<main className="container mx-auto px-6 relative z-10">
+			{/* Main Content */}
+			<main>
+				{/* Hero Section */}
 				<section
-					className="min-h-screen flex items-center justify-center relative"
 					id="home"
+					className="min-h-screen flex items-center justify-center pt-20"
 				>
-					<motion.div
-						className="text-center relative z-10 flex flex-col items-center space-y-7"
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 1 }}
-					>
-						<div className="relative inline-block mb-8">
-							<div className="w-40 h-40 absolute inset-0 rounded-full bg-gradient-to-r from-emerald-600 to-cyan-600 blur opacity-50" />
-							<Image
-								src="/images/me_full.jpg"
-								width={160}
-								height={160}
-								alt="Sunehildeep Singh"
-								className="rounded-full relative z-10 object-cover w-40 h-40"
-							/>
-						</div>
-						<h1 className="text-5xl md:text-7xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 p-2">
-							Sunehildeep Singh
-						</h1>
-						<ReactTyped
-							strings={[
-								"AI Engineer",
-								"Coding since 14",
-								"Software Engineer at 19",
-								`${new Date().getFullYear() - 2002} years old`,
-								"Full Stack Developer",
-								"Community Contributor",
-							]}
-							typeSpeed={50}
-							backSpeed={30}
-							loop
-							className="text-xl md:text-2xl text-emerald-300 mb-8 p-2"
-						/>
-						<div className="flex space-x-6 items-center justify-center p-2">
-							{socialLinks.map((link, index) => (
-								<a
-									key={index}
-									href={link.href}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="text-emerald-400 hover:text-emerald-300 hover:scale-110 transform transition-all duration-300 "
-									title={link.tooltip}
-								>
-									{link.icon}
-								</a>
-							))}
-						</div>
-					</motion.div>
-				</section>
+					<div className="container mx-auto px-6">
+						<div className="flex flex-col items-center text-center space-y-8">
+							{/* Profile Image */}
+							<motion.div
+								initial={{ scale: 0 }}
+								animate={{ scale: 1 }}
+								transition={{
+									type: "spring",
+									stiffness: 260,
+									damping: 20,
+								}}
+								className="relative w-48 h-48"
+							>
+								<div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-600/50 to-cyan-600/50 blur-xl" />
+								<Image
+									src="/images/me_full.jpg"
+									alt="Sunehildeep Singh"
+									fill
+									className="object-cover rounded-full border-2 border-emerald-500/50"
+								/>
+							</motion.div>
 
-				{/* Chat real time  */}
-				<section id="chat" className="py-20">
-					<motion.div
-						initial={{ opacity: 0 }}
-						whileInView={{ opacity: 1 }}
-						viewport={{ once: true }}
-						className="space-y-12"
-					>
-						<h2 className="text-5xl font-bold text-emerald-400 mb-12 text-center">
-							AI Chat
-						</h2>
-						{/* Input */}
-						<InputForm />
-					</motion.div>
-				</section>
+							{/* Name and Title */}
+							<motion.div
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ delay: 0.2 }}
+								className="space-y-4"
+							>
+								<h1 className="text-5xl md:text-7xl font-bold">
+									<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+										Sunehildeep Singh
+									</span>
+								</h1>
+								<div className="h-[2rem]">
+									<ReactTyped
+										strings={[
+											"Software Engineer at 19 💻",
+											"AI Enthusiast 🤖",
+											"Started Coding at 14 🚀",
+											"Full Stack Developer ⚡",
+										]}
+										typeSpeed={50}
+										backSpeed={30}
+										loop
+										className="text-xl text-gray-400"
+									/>
+								</div>
+							</motion.div>
 
-				<section id="experience" className="py-20">
-					<motion.div
-						initial={{ opacity: 0 }}
-						whileInView={{ opacity: 1 }}
-						viewport={{ once: true }}
-						className="space-y-12"
-					>
-						<h2 className="text-4xl md:text-5xl font-bold text-emerald-400 mb-12 text-center">
-							Experience
-						</h2>
-						<div className="space-y-12">
-							{experiences.map((experience, index) => (
-								<motion.div
-									key={experience.company}
-									whileHover={{ scale: 1.05 }}
-									transition={{ type: "spring", stiffness: 200 }}
-								>
-									<ExperienceCard experience={experience} index={index} />
-								</motion.div>
-							))}
+							{/* Social Links */}
+							<motion.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ delay: 0.4 }}
+								className="flex space-x-6"
+							>
+								{socialLinks.map((link, index) => (
+									<motion.a
+										key={index}
+										href={link.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										whileHover={{ scale: 1.2, rotate: 5 }}
+										className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+									>
+										{link.icon}
+									</motion.a>
+								))}
+							</motion.div>
+
+							{/* Scroll Indicator */}
+							<motion.div
+								className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
+								transition={{ repeat: Infinity, duration: 2 }}
+								onClick={() => scrollToSection("chat")}
+								whileHover={{ scale: 1.1 }}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+							>
+								<ChevronDown className="w-10 h-10 text-emerald-400" />
+							</motion.div>
 						</div>
-					</motion.div>
-				</section>
-				<section id="achievements" className="py-20">
-					<motion.div
-						initial={{ opacity: 0 }}
-						whileInView={{ opacity: 1 }}
-						viewport={{ once: true }}
-						className="space-y-12"
-					>
-						<h2 className="text-4xl md:text-5xl font-bold text-emerald-400 mb-12 text-center">
-							Achievements
-						</h2>
-						<div className="space-y-12">
-							{timelineData.map((experience, index) => (
-								<motion.div
-									key={experience.year}
-									whileHover={{ scale: 1.05 }}
-									transition={{ type: "spring", stiffness: 200 }}
-								>
-									<TimelineCard timeline={experience} index={index} />
-								</motion.div>
-							))}
-						</div>
-					</motion.div>
-				</section>
-				<section id="projects" className="py-20  flex flex-col justify-center">
-					<h2 className="text-4xl md:text-5xl font-bold text-emerald-400 mb-12 text-center">
-						Featured Projects
-					</h2>
-					<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-12">
-						{projects.map((project, index) => (
-							<ProjectCard
-								key={project.title}
-								project={project}
-								index={index}
-							/>
-						))}
 					</div>
 				</section>
 
-				<section id="contact" className="py-20">
-					<motion.div
-						initial={{ opacity: 0 }}
-						whileInView={{ opacity: 1 }}
-						viewport={{ once: true }}
-						className="space-y-12"
-					>
-						<h2 className="text-4xl md:text-5xl font-bold text-emerald-400 mb-12 text-center">
-							Contact
-						</h2>
-						<div className="flex flex-col items-center space-y-6">
-							{[
-								{
-									icon: Github,
-									text: "GitHub",
-									href: "https://github.com/Sunehildeep",
-								},
-								{
-									icon: Mail,
-									text: "Email",
-									href: "mailto:sunehildeep@gmail.com",
-								},
-								{
-									icon: Linkedin,
-									text: "LinkedIn",
-									href: "https://www.linkedin.com/in/sunehildeepsingh/",
-								},
-								{
-									icon: Paperclip,
-									text: "Resume",
-									href: "/images/SunehildeepSingh_Resume.pdf",
-								},
-							].map((item, index) => (
-								<a
-									key={index}
-									href={item.href}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="flex items-center space-x-4 text-emerald-400 hover:text-emerald-300 transition-colors"
-								>
-									<item.icon size={24} />
-									<span>{item.text}</span>
-								</a>
-							))}
-						</div>
-					</motion.div>
+				{/* Chat Section */}
+				<section id="chat" className="py-24">
+					<div className="container mx-auto px-6">
+						<motion.div
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
+							viewport={{ once: true }}
+							className="max-w-4xl mx-auto"
+						>
+							<motion.h2
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+								className="text-4xl font-bold text-center mb-12"
+							>
+								<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+									Chat With Me
+								</span>
+							</motion.h2>
+							<InputForm />
+						</motion.div>
+					</div>
 				</section>
-			</main>
+				{/* Experience Section */}
+				<section id="experience" className="py-24 relative">
+					<div className="absolute inset-0 bg-emerald-900/10" />
+					<div className="container mx-auto px-6 relative">
+						<motion.div
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
+							viewport={{ once: true }}
+							className="space-y-12"
+						>
+							<motion.h2
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+								className="text-4xl font-bold text-center mb-16"
+							>
+								<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+									Professional Experience
+								</span>
+							</motion.h2>
+							<div className="max-w-4xl mx-auto space-y-8">
+								{experiences.map((experience, index) => (
+									<ExperienceCard
+										key={experience.company}
+										experience={experience}
+										index={index}
+									/>
+								))}
+							</div>
+						</motion.div>
+					</div>
+				</section>
 
-			<footer className="py-12 text-center text-emerald-300">
-				<p>Made with ❤️ by Sunehildeep Singh © {new Date().getFullYear()}</p>
-			</footer>
+				{/* Projects Section */}
+				<section id="projects" className="py-24 relative">
+					<div className="container mx-auto px-6">
+						<motion.div
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
+							viewport={{ once: true }}
+							className="space-y-12"
+						>
+							<motion.h2
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+								className="text-4xl font-bold text-center mb-16"
+							>
+								<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+									Featured Projects
+								</span>
+							</motion.h2>
+
+							{/* Project Grid with custom hover effect */}
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+								{projects.map((project, index) => (
+									<ProjectCard
+										key={project.title}
+										project={project}
+										index={index}
+									/>
+								))}
+							</div>
+						</motion.div>
+					</div>
+				</section>
+
+				{/* Journey Section */}
+				<section id="journey" className="py-24 relative">
+					<div className="absolute inset-0 bg-emerald-900/10" />
+					<div className="container mx-auto px-6 relative">
+						<motion.div
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
+							viewport={{ once: true }}
+							className="space-y-12"
+						>
+							<motion.h2
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+								className="text-4xl font-bold text-center mb-16"
+							>
+								<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+									My Journey
+								</span>
+							</motion.h2>
+
+							{/* Timeline container */}
+							<div className="max-w-4xl mx-auto">
+								{timelineData.map((timeline, index) => (
+									<motion.div
+										key={timeline.year}
+										initial={{ opacity: 0, x: -50 }}
+										whileInView={{ opacity: 1, x: 0 }}
+										transition={{ delay: index * 0.2 }}
+										viewport={{ once: true }}
+									>
+										<TimelineCard timeline={timeline} index={index} />
+									</motion.div>
+								))}
+							</div>
+						</motion.div>
+					</div>
+				</section>
+
+				{/* Contact Section */}
+				<section id="contact" className="py-24 relative">
+					<div className="container mx-auto px-6">
+						<motion.div
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
+							viewport={{ once: true }}
+							className="max-w-4xl mx-auto"
+						>
+							<motion.h2
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+								className="text-4xl font-bold text-center mb-16"
+							>
+								<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+									Let's Connect
+								</span>
+							</motion.h2>
+
+							{/* Contact Card */}
+							<motion.div
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+								className="bg-black/50 backdrop-blur-xl rounded-2xl overflow-hidden border border-emerald-500/20"
+							>
+								<div className="grid md:grid-cols-2 gap-0">
+									{/* Left Column - Contact Info */}
+									<div className="p-8 border-r border-emerald-500/20">
+										<h3 className="text-2xl font-bold text-emerald-400 mb-6">
+											Get in Touch
+										</h3>
+										<div className="space-y-6">
+											{[
+												{
+													icon: Mail,
+													text: "sunehildeep@gmail.com",
+													href: "mailto:sunehildeep@gmail.com",
+												},
+												{
+													icon: Github,
+													text: "GitHub",
+													href: "https://github.com/Sunehildeep",
+												},
+												{
+													icon: Linkedin,
+													text: "LinkedIn",
+													href: "https://linkedin.com/in/sunehildeepsingh",
+												},
+											].map((item, index) => (
+												<motion.a
+													key={index}
+													href={item.href}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="flex items-center space-x-4 text-gray-400 hover:text-emerald-400 p-2 rounded-lg hover:bg-emerald-500/10 transition-all group"
+													whileHover={{ x: 4 }}
+												>
+													<motion.span
+														whileHover={{ rotate: 360 }}
+														transition={{ duration: 0.8 }}
+													>
+														<item.icon className="h-5 w-5" />
+													</motion.span>
+													<span className="group-hover:underline">
+														{item.text}
+													</span>
+												</motion.a>
+											))}
+										</div>
+									</div>
+
+									{/* Right Column - Resume */}
+									<div className="p-8 bg-emerald-500/5">
+										<h3 className="text-2xl font-bold text-emerald-400 mb-6">
+											Quick Links
+										</h3>
+										<motion.a
+											href="/images/SunehildeepSingh_Resume.pdf"
+											target="_blank"
+											className="inline-flex items-center space-x-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 px-6 py-3 rounded-lg transition-all group"
+											whileHover={{ scale: 1.05 }}
+										>
+											<Paperclip className="h-5 w-5 group-hover:rotate-12 transition-transform" />
+											<span>View Resume</span>
+										</motion.a>
+									</div>
+								</div>
+							</motion.div>
+						</motion.div>
+					</div>
+				</section>
+
+				{/* Footer */}
+				<footer className="py-8 text-center text-gray-400 bg-black/30">
+					<motion.p
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ delay: 0.5 }}
+						className="flex items-center justify-center space-x-2"
+					>
+						<span>
+							© {new Date().getFullYear()} Sunehildeep Singh. Built with
+						</span>
+						<motion.span
+							animate={{ scale: [1, 1.2, 1] }}
+							transition={{ repeat: Infinity, duration: 2 }}
+							className="text-red-500"
+						>
+							❤️
+						</motion.span>
+					</motion.p>
+				</footer>
+			</main>
 		</div>
 	);
 }

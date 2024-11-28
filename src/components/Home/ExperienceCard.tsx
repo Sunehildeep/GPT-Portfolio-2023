@@ -1,4 +1,6 @@
+import React from "react";
 import { motion } from "framer-motion";
+import { Briefcase, Calendar } from "lucide-react";
 
 interface Experience {
 	title: string;
@@ -16,35 +18,72 @@ interface ExperienceCardProps {
 export const ExperienceCard: React.FC<ExperienceCardProps> = ({
 	experience,
 	index,
-}) => (
-	<motion.div
-		initial={{ opacity: 0, x: -50 }}
-		whileInView={{ opacity: 1, x: 0 }}
-		transition={{ duration: 0.6, delay: index * 0.1 }}
-		className="relative group"
-	>
-		<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-		<div className="relative bg-black/80 backdrop-blur-xl rounded-xl p-6 border border-emerald-500/20">
-			<h3 className="text-xl font-semibold text-emerald-400">
-				{experience.title}
-			</h3>
-			<p className="text-emerald-300 mb-2">{experience.company}</p>
-			<p className="text-gray-500 mb-4">{experience.period}</p>
-			<ul className="list-disc list-inside space-y-2 text-gray-400 mb-4">
-				{experience.description.map((desc, i) => (
-					<li key={i}>{desc}</li>
-				))}
-			</ul>
-			<div className="flex flex-wrap gap-2">
-				{experience.skills.map((skill) => (
-					<span
-						key={skill}
-						className="px-2 py-1 bg-emerald-900/30 rounded-full text-sm text-emerald-300"
-					>
-						{skill}
-					</span>
-				))}
+}) => {
+	return (
+		<motion.div
+			initial={{ opacity: 0, y: 20 }}
+			whileInView={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.5, delay: index * 0.1 }}
+			viewport={{ once: true }}
+			className="relative"
+		>
+			<div className="bg-black/50 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20">
+				<div className="space-y-6">
+					{/* Header */}
+					<div className="flex flex-col space-y-2">
+						<div className="flex items-center space-x-3">
+							<Briefcase className="h-5 w-5 text-emerald-400" />
+							<h3 className="text-xl font-bold text-emerald-400">
+								{experience.title}
+							</h3>
+						</div>
+						<div className="flex items-center space-x-3 text-gray-400">
+							<div className="flex items-center space-x-1">
+								<span className="text-lg">{experience.company}</span>
+							</div>
+							<span>•</span>
+							<div className="flex items-center space-x-1">
+								<Calendar className="h-4 w-4" />
+								<span>{experience.period}</span>
+							</div>
+						</div>
+					</div>
+
+					{/* Description */}
+					<ul className="space-y-3">
+						{experience.description.map((desc, i) => (
+							<motion.li
+								key={i}
+								initial={{ opacity: 0, x: -20 }}
+								whileInView={{ opacity: 1, x: 0 }}
+								transition={{ delay: 0.2 + i * 0.1 }}
+								viewport={{ once: true }}
+								className="flex items-start space-x-3 text-gray-300"
+							>
+								<span className="mt-2 h-1.5 w-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+								<span>{desc}</span>
+							</motion.li>
+						))}
+					</ul>
+
+					{/* Skills */}
+					<div className="flex flex-wrap gap-2">
+						{experience.skills.map((skill, i) => (
+							<motion.span
+								key={skill}
+								initial={{ opacity: 0, scale: 0.8 }}
+								whileInView={{ opacity: 1, scale: 1 }}
+								transition={{ delay: 0.3 + i * 0.05 }}
+								viewport={{ once: true }}
+								whileHover={{ scale: 1.05 }}
+								className="px-3 py-1 text-sm bg-emerald-500/10 text-emerald-400 rounded-full"
+							>
+								{skill}
+							</motion.span>
+						))}
+					</div>
+				</div>
 			</div>
-		</div>
-	</motion.div>
-);
+		</motion.div>
+	);
+};
