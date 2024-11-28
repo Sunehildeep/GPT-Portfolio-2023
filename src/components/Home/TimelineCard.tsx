@@ -20,9 +20,10 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			whileInView={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, delay: index * 0.1 }}
+			transition={{ duration: 0.3 }}
 			viewport={{ once: true }}
 			className="relative pl-8 md:pl-12"
+			whileHover={{ y: -5 }}
 		>
 			{/* Timeline Line */}
 			<div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-emerald-500 to-cyan-500" />
@@ -33,7 +34,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({
 				whileInView={{ scale: 1 }}
 				transition={{ delay: 0.2, type: "spring" }}
 				viewport={{ once: true }}
-				className="absolute left-0 transform -translate-x-1/2"
+				className="absolute -left-4 transform -translate-x-1/2"
 			>
 				<div className="w-8 h-8 rounded-full bg-black/50 border border-emerald-500 flex items-center justify-center">
 					<Clock className="h-4 w-4 text-emerald-400" />
@@ -46,14 +47,17 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({
 				whileInView={{ opacity: 1, x: 0 }}
 				transition={{ delay: 0.3 }}
 				viewport={{ once: true }}
-				className="bg-black/50 backdrop-blur-xl rounded-2xl p-6 border border-emerald-500/20"
+				className="relative bg-black/50 backdrop-blur-xl rounded-2xl p-6 border border-emerald-500/20 transition-colors"
 			>
+				<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600  rounded-xl blur opacity-0 hover:opacity-25 group-hover:opacity-75 transition duration-300"></div>
+
 				<div className="space-y-4">
 					<div className="flex items-center space-x-3">
 						<h3 className="text-2xl font-bold text-emerald-400">
 							{timeline.year}
 						</h3>
 					</div>
+
 					<p className="text-gray-300 leading-relaxed">{timeline.content}</p>
 				</div>
 

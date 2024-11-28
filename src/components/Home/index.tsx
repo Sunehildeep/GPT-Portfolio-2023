@@ -301,40 +301,6 @@ export default function Portfolio() {
 					</div>
 				</section>
 
-				{/* Projects Section */}
-				<section id="projects" className="py-24 relative">
-					<div className="container mx-auto px-6">
-						<motion.div
-							initial={{ opacity: 0 }}
-							whileInView={{ opacity: 1 }}
-							viewport={{ once: true }}
-							className="space-y-12"
-						>
-							<motion.h2
-								initial={{ opacity: 0, y: 20 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								viewport={{ once: true }}
-								className="text-4xl font-bold text-center mb-16"
-							>
-								<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-									Featured Projects
-								</span>
-							</motion.h2>
-
-							{/* Project Grid with custom hover effect */}
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-								{projects.map((project, index) => (
-									<ProjectCard
-										key={project.title}
-										project={project}
-										index={index}
-									/>
-								))}
-							</div>
-						</motion.div>
-					</div>
-				</section>
-
 				{/* Journey Section */}
 				<section id="journey" className="py-24 relative">
 					<div className="absolute inset-0 bg-emerald-900/10" />
@@ -374,6 +340,40 @@ export default function Portfolio() {
 					</div>
 				</section>
 
+				{/* Projects Section */}
+				<section id="projects" className="py-24 relative">
+					<div className="container mx-auto px-6">
+						<motion.div
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
+							viewport={{ once: true }}
+							className="space-y-12"
+						>
+							<motion.h2
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+								className="text-4xl font-bold text-center mb-16"
+							>
+								<span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+									Featured Projects
+								</span>
+							</motion.h2>
+
+							{/* Project Grid with custom hover effect */}
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+								{projects.map((project, index) => (
+									<ProjectCard
+										key={project.title}
+										project={project}
+										index={index}
+									/>
+								))}
+							</div>
+						</motion.div>
+					</div>
+				</section>
+
 				{/* Contact Section */}
 				<section id="contact" className="py-24 relative">
 					<div className="container mx-auto px-6">
@@ -401,6 +401,7 @@ export default function Portfolio() {
 								viewport={{ once: true }}
 								className="bg-black/50 backdrop-blur-xl rounded-2xl overflow-hidden border border-emerald-500/20"
 							>
+								{" "}
 								<div className="grid md:grid-cols-2 gap-0">
 									{/* Left Column - Contact Info */}
 									<div className="p-8 border-r border-emerald-500/20">

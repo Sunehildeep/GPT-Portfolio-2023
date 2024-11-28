@@ -23,11 +23,14 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			whileInView={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, delay: index * 0.1 }}
+			transition={{ duration: 0.3, delay: index * 0.1 }}
 			viewport={{ once: true }}
-			className="relative"
+			className="relative group"
+			whileHover={{ scale: 1.05 }}
 		>
-			<div className="bg-black/50 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20">
+			<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
+
+			<div className="relative bg-black/50 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20">
 				<div className="space-y-6">
 					{/* Header */}
 					<div className="flex flex-col space-y-2">

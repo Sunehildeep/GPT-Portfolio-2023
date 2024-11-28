@@ -37,10 +37,11 @@ export const InputForm = () => {
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.6 }}
+			transition={{ duration: 0.3 }}
 			className="relative group"
+			whileHover={{ scale: 1.05 }}
 		>
-			<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+			<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
 
 			<div className="relative bg-black/80 backdrop-blur-xl rounded-xl p-8 border border-emerald-500/20">
 				<motion.div

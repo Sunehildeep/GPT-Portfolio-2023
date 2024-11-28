@@ -19,11 +19,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			whileInView={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, delay: index * 0.1 }}
+			transition={{ duration: 0.3, delay: index * 0.1 }}
 			viewport={{ once: true }}
 			whileHover={{ y: -5 }}
 			className="relative group h-full"
 		>
+			<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
+
 			<div className="bg-black/50 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full transition-colors">
 				{/* Header */}
 				<div className="flex items-start justify-between mb-6">
