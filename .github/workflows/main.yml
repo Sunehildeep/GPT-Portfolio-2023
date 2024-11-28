@@ -5,9 +5,9 @@
 name: Deploy Next.js site to Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting specified branches
   push:
-    branches: "master"
+    branches: ["master", "oldies"]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
