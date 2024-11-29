@@ -1,81 +1,37 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Clock } from "lucide-react";
 
-interface Timeline {
-	year: string;
-	content: string;
-}
-
-interface TimelineCardProps {
-	timeline: Timeline;
+interface TimelineProps {
+	event: TimelineEvent;
 	index: number;
 }
 
-export const TimelineCard: React.FC<TimelineCardProps> = ({
-	timeline,
-	index,
-}) => {
+interface TimelineEvent {
+	year: string;
+	title: string;
+	description: string;
+}
+
+export const TimelineCard = ({ event, index }: TimelineProps) => {
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 20 }}
-			whileInView={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.3 }}
+			initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+			whileInView={{ opacity: 1, x: 0 }}
 			viewport={{ once: true }}
-			className="relative pl-8 md:pl-12"
-			whileHover={{ y: -5 }}
+			className={`relative flex ${index % 2 === 0 ? "justify-end" : ""}`}
 		>
-			{/* Timeline Line */}
-			<div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-emerald-500 to-cyan-500" />
-
-			{/* Timeline Dot */}
-			<motion.div
-				initial={{ scale: 0 }}
-				whileInView={{ scale: 1 }}
-				transition={{ delay: 0.2, type: "spring" }}
-				viewport={{ once: true }}
-				className="absolute -left-4 transform -translate-x-1/2"
-			>
-				<div className="w-8 h-8 rounded-full bg-black/50 border border-emerald-500 flex items-center justify-center">
-					<Clock className="h-4 w-4 text-emerald-400" />
-				</div>
-			</motion.div>
-
-			{/* Content */}
-			<motion.div
-				initial={{ opacity: 0, x: -20 }}
-				whileInView={{ opacity: 1, x: 0 }}
-				transition={{ delay: 0.3 }}
-				viewport={{ once: true }}
-				className="relative bg-black/50 backdrop-blur-xl rounded-2xl p-6 border border-emerald-500/20 transition-colors"
-			>
-				<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600  rounded-xl blur opacity-0 hover:opacity-25 group-hover:opacity-75 transition duration-300"></div>
-
-				<div className="space-y-4">
-					<div className="flex items-center space-x-3">
-						<h3 className="text-2xl font-bold text-emerald-400">
-							{timeline.year}
-						</h3>
-					</div>
-
-					<p className="text-gray-300 leading-relaxed">{timeline.content}</p>
+			<div className={`w-full md:w-1/2 ${index % 2 === 0 ? "pr-16" : "pl-16"}`}>
+				<div className="absolute top-0 left-1/2 w-4 h-4 bg-purple-500 rounded-full -translate-x-1/2">
+					<div className="absolute inset-0 rounded-full bg-purple-500 animate-ping opacity-75" />
 				</div>
 
-				{/* Visual Element */}
-				<motion.div
-					className="absolute top-4 right-4 opacity-10"
-					animate={{
-						rotate: [0, 360],
-					}}
-					transition={{
-						duration: 20,
-						repeat: Infinity,
-						ease: "linear",
-					}}
-				>
-					<Clock className="h-12 w-12 text-emerald-400" />
-				</motion.div>
-			</motion.div>
+				<div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 transition-all duration-500 ease-in-out hover:bg-white/10 hover:border-white/20 hover:translate-x-2">
+					{" "}
+					<span className="text-purple-400 font-medium">{event.year}</span>
+					<h3 className="text-2xl font-bold mt-2 mb-4">{event.title}</h3>
+					<p className="text-gray-400 leading-relaxed">{event.description}</p>
+				</div>
+			</div>
 		</motion.div>
 	);
 };

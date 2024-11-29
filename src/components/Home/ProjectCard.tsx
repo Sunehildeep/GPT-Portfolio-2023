@@ -1,85 +1,67 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Code } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 interface Project {
 	title: string;
 	description: string;
+	category: string;
 	tech: string[];
 	link: string;
 }
 
 interface ProjectCardProps {
 	project: Project;
-	index: number;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
+export const ProjectCard = ({ project }: ProjectCardProps) => {
 	return (
-		<motion.div
-			initial={{ opacity: 0, y: 20 }}
+		<motion.article
+			key={project.title}
+			initial={{ opacity: 0, y: 50 }}
 			whileInView={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.3, delay: index * 0.1 }}
-			viewport={{ once: true }}
-			whileHover={{ y: -5 }}
-			className="relative group h-full"
+			viewport={{ once: true, margin: "-100px" }}
+			className="group relative"
 		>
-			<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
-
-			<div className="bg-black/50 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 h-full transition-colors">
-				{/* Header */}
-				<div className="flex items-start justify-between mb-6">
-					<div className="flex items-center space-x-3">
-						<Code className="h-5 w-5 text-emerald-400" />
-						<h3 className="text-xl font-bold text-emerald-400">
-							{project.title}
-						</h3>
+			<div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-12 transition-all duration-500 ease-in-out hover:bg-white/10 hover:border-white/20">
+				<motion.div
+					initial={{ x: -50, opacity: 0 }}
+					whileInView={{ x: 0, opacity: 1 }}
+					viewport={{ once: true }}
+					transition={{ delay: 0.2 }}
+					className="flex flex-col gap-6"
+				>
+					<div className="space-y-2">
+						<h3 className="text-4xl font-bold">{project.title}</h3>
+						<p className="text-purple-400 text-xl">{project.category}</p>
 					</div>
+
+					<p className="text-gray-400 text-xl leading-relaxed max-w-4xl">
+						{project.description}
+					</p>
+
+					<div className="flex flex-wrap gap-3">
+						{project.tech.map((item, i) => (
+							<span
+								key={i}
+								className="px-4 py-2 bg-purple-500/10 rounded-full text-purple-300"
+							>
+								{item}
+							</span>
+						))}
+					</div>
+
 					<motion.a
 						href={project.link}
 						target="_blank"
 						rel="noopener noreferrer"
-						whileHover={{ scale: 1.1, rotate: 5 }}
-						className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+						className="flex items-center gap-2 text-white/60 hover:text-white w-fit"
+						whileHover={{ x: 10 }}
 					>
-						<Github className="h-5 w-5" />
+						View Project <ExternalLink size={20} />
 					</motion.a>
-				</div>
-
-				{/* Description */}
-				<p className="text-gray-300 mb-6">{project.description}</p>
-
-				{/* Technologies */}
-				<div className="flex flex-wrap gap-2 mt-auto">
-					{project.tech.map((tech, i) => (
-						<motion.span
-							key={tech}
-							initial={{ opacity: 0, scale: 0.8 }}
-							whileInView={{ opacity: 1, scale: 1 }}
-							transition={{ delay: 0.2 + i * 0.05 }}
-							viewport={{ once: true }}
-							whileHover={{ scale: 1.05 }}
-							className="px-3 py-1 text-sm bg-emerald-500/10 text-emerald-400 rounded-full"
-						>
-							{tech}
-						</motion.span>
-					))}
-				</div>
-
-				{/* Hover Effect */}
-				<motion.a
-					target="_blank"
-					href={project.link ?? ""}
-					initial={false}
-					animate={{ opacity: project.link ? 1 : 0 }}
-					className="absolute inset-x-0 -bottom-4 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-				>
-					<span className="bg-emerald-400 text-black text-sm px-3 py-1 rounded-full flex items-center space-x-1 cursor-pointer">
-						<span>View Project</span>
-						<ExternalLink className="h-3 w-3" />
-					</span>
-				</motion.a>
+				</motion.div>
 			</div>
-		</motion.div>
+		</motion.article>
 	);
 };

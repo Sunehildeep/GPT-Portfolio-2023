@@ -1,13 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Briefcase, Calendar } from "lucide-react";
 
 interface Experience {
-	title: string;
+	role: string;
 	company: string;
 	period: string;
 	description: string[];
-	skills: string[];
+	skills?: string[];
 }
 
 interface ExperienceCardProps {
@@ -15,76 +14,52 @@ interface ExperienceCardProps {
 	index: number;
 }
 
-export const ExperienceCard: React.FC<ExperienceCardProps> = ({
-	experience,
-	index,
-}) => {
+export const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 20 }}
-			whileInView={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.3, delay: index * 0.1 }}
+			key={experience.role}
+			initial={{ opacity: 0, x: -50 }}
+			whileInView={{ opacity: 1, x: 0 }}
 			viewport={{ once: true }}
-			className="relative group"
-			whileHover={{ scale: 1.05 }}
+			className="group relative"
 		>
-			<div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-cyan-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
-
-			<div className="relative bg-black/50 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20">
+			<div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-12 transition-all duration-500 ease-in-out hover:bg-white/10 hover:border-white/20">
+				{" "}
 				<div className="space-y-6">
-					{/* Header */}
-					<div className="flex flex-col space-y-2">
-						<div className="flex items-center space-x-3">
-							<Briefcase className="h-5 w-5 text-emerald-400" />
-							<h3 className="text-xl font-bold text-emerald-400">
-								{experience.title}
-							</h3>
-						</div>
-						<div className="flex items-center space-x-3 text-gray-400">
-							<div className="flex items-center space-x-1">
-								<span className="text-lg">{experience.company}</span>
-							</div>
-							<span>•</span>
-							<div className="flex items-center space-x-1">
-								<Calendar className="h-4 w-4" />
-								<span>{experience.period}</span>
-							</div>
-						</div>
+					<div className="space-y-2">
+						<h3 className="text-3xl font-bold">{experience.role}</h3>
+						<p className="text-purple-400 text-xl">{experience.company}</p>
+						<p className="text-gray-500">{experience.period}</p>
 					</div>
 
-					{/* Description */}
-					<ul className="space-y-3">
-						{experience.description.map((desc, i) => (
-							<motion.li
+					<div className="space-y-4">
+						{experience.description.map((item, i) => (
+							<motion.div
 								key={i}
 								initial={{ opacity: 0, x: -20 }}
 								whileInView={{ opacity: 1, x: 0 }}
-								transition={{ delay: 0.2 + i * 0.1 }}
 								viewport={{ once: true }}
-								className="flex items-start space-x-3 text-gray-300"
+								transition={{ delay: i * 0.1 }}
+								className="flex items-start gap-4"
 							>
-								<span className="mt-2 h-1.5 w-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-								<span>{desc}</span>
-							</motion.li>
-						))}
-					</ul>
-
-					{/* Skills */}
-					<div className="flex flex-wrap gap-2">
-						{experience.skills.map((skill, i) => (
-							<motion.span
-								key={skill}
-								initial={{ opacity: 0, scale: 0.8 }}
-								whileInView={{ opacity: 1, scale: 1 }}
-								transition={{ delay: 0.3 + i * 0.05 }}
-								viewport={{ once: true }}
-								whileHover={{ scale: 1.05 }}
-								className="px-3 py-1 text-sm bg-emerald-500/10 text-emerald-400 rounded-full"
-							>
-								{skill}
-							</motion.span>
+								<span className="w-2 h-2 bg-purple-500 rounded-full mt-3" />
+								<p className="text-gray-400 text-lg flex-1">{item}</p>
+							</motion.div>
 						))}
 					</div>
+
+					{experience.skills && (
+						<div className="flex flex-wrap gap-3 pt-6">
+							{experience.skills.map((skill, i) => (
+								<span
+									key={i}
+									className="px-4 py-2 bg-white/5 rounded-full text-gray-300"
+								>
+									{skill}
+								</span>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		</motion.div>
