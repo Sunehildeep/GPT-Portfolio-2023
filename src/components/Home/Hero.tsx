@@ -141,8 +141,9 @@ function Hero() {
 						transition={{ delay: 0.4 }}
 						className="text-2xl text-purple-300 text-center max-w-3xl mx-auto"
 					>
-						Software Engineer crafting intelligent solutions through code.
-						Specialized in AI development and full-stack engineering.
+						AI specialist and software engineer with a passion sparked by an
+						early start in programming at 14. Leveraging neural networks to
+						drive innovation and efficiency.
 					</motion.p>
 
 					<motion.div
