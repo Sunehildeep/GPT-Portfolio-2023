@@ -31,10 +31,9 @@ const PortfolioSite = () => {
 		return () => window.removeEventListener("mousemove", handleMouseMove);
 	}, []);
 
-	return isLoading ? (
-		<AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
-	) : (
+	return (
 		<>
+			<AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
 			<div ref={containerRef} className="min-h-screen bg-black text-white">
 				<CursorHighlight mousePosition={mousePosition} />
 				<FloatingNav isLoading={isLoading} />

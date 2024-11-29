@@ -11,9 +11,10 @@ const FloatingNav = ({ isLoading = true }: FloatingNavProps) => {
 		() => ["Home", "Chat", "Projects", "Experience", "Journey"],
 		[]
 	);
-	const isMobile = window.innerWidth < 768;
 
 	useEffect(() => {
+		const isMobile = window.innerWidth < 768;
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
@@ -33,7 +34,7 @@ const FloatingNav = ({ isLoading = true }: FloatingNavProps) => {
 		});
 
 		return () => observer.disconnect();
-	}, [isMobile, navItems]);
+	}, [navItems]);
 
 	if (isLoading) return null;
 
