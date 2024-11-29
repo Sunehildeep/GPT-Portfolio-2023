@@ -1,5 +1,5 @@
 // content.js
-import { File, Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Paperclip } from "lucide-react";
 export const projects = [
 	{
 		title: "Transformer LLM Chatbot",
@@ -137,7 +137,7 @@ export const socialLinks = [
 		label: "Email Contact",
 	},
 	{
-		icon: File,
+		icon: Paperclip,
 		href: "https://sunehildeepsingh.com/images/SunehildeepSingh_Resume.pdf",
 		label: "Resume",
 	},

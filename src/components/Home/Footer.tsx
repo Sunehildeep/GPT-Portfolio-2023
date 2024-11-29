@@ -54,6 +54,17 @@ const Footer = () => (
 								</motion.button>
 							</li>
 						))}
+						{/* Resume */}
+						<li>
+							<motion.a
+								whileHover={{ x: 5 }}
+								href="/images/SunehildeepSingh_Resume.pdf"
+								target="_blank"
+								className="text-gray-400 hover:text-white transition-colors"
+							>
+								Resume
+							</motion.a>
+						</li>
 					</ul>
 				</div>
 			</div>
