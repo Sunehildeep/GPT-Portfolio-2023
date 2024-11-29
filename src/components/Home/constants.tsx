@@ -2,8 +2,8 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 export const projects = [
 	{
-		title: "Neural Dialogue System",
-		category: "AI Research",
+		title: "Transformer LLM Chatbot",
+		category: "Neural Networks",
 		description:
 			"Built a state-of-the-art transformer-based chatbot from scratch, achieving 85% accuracy on conversation modeling. Implemented complete encoder-decoder architecture with attention mechanisms, showcasing deep understanding of NLP principles.",
 		tech: ["TensorFlow", "Python", "Transformers", "NLP"],
@@ -12,7 +12,7 @@ export const projects = [
 	},
 	{
 		title: "Advanced Text Generation",
-		category: "Machine Learning",
+		category: "Neural Networks",
 		description:
 			"Engineered a sophisticated LSTM-based RNN for natural language generation, demonstrating GPT-like capabilities. Implemented advanced features like temperature sampling and beam search for improved text coherence.",
 		tech: ["TensorFlow", "LSTM", "Python", "Deep Learning"],
