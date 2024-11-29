@@ -43,7 +43,7 @@ const PortfolioSite = () => {
 				<Hero />
 
 				{/* Chat Section */}
-				<section id="chat" className="min-h-screen py-32 px-8 lg:px-24">
+				<section id="chat" className="py-32 px-8 lg:px-24">
 					<div className="max-w-7xl mx-auto">
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
@@ -51,7 +51,7 @@ const PortfolioSite = () => {
 							viewport={{ once: true }}
 							className="text-center space-y-4 mb-24"
 						>
-							<h2 className="text-6xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+							<h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
 								Chat with Me
 							</h2>
 							<p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -74,7 +74,7 @@ const PortfolioSite = () => {
 							viewport={{ once: true }}
 							className="text-center space-y-4 mb-24"
 						>
-							<h2 className="text-6xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+							<h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
 								Featured Projects
 							</h2>
 							<p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -99,7 +99,7 @@ const PortfolioSite = () => {
 							viewport={{ once: true }}
 							className="text-center space-y-4 mb-24"
 						>
-							<h2 className="text-6xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+							<h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
 								Professional Experience
 							</h2>
 							<p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -131,7 +131,7 @@ const PortfolioSite = () => {
 							viewport={{ once: true }}
 							className="text-center space-y-4 mb-24"
 						>
-							<h2 className="text-6xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+							<h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
 								My Journey
 							</h2>
 							<p className="text-xl text-gray-400 max-w-3xl mx-auto">
