@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 
 interface FloatingNavProps {
@@ -7,7 +7,10 @@ interface FloatingNavProps {
 
 const FloatingNav = ({ isLoading = true }: FloatingNavProps) => {
 	const [active, setActive] = useState("home");
-	const navItems = ["Home", "Chat", "Projects", "Experience", "Journey"];
+	const navItems = useMemo(
+		() => ["Home", "Chat", "Projects", "Experience", "Journey"],
+		[]
+	);
 	const isMobile = window.innerWidth < 768;
 
 	useEffect(() => {
