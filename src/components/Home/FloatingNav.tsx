@@ -5,7 +5,7 @@ interface FloatingNavProps {
 	isLoading: boolean;
 }
 
-const FloatingNav = ({ isLoading }: FloatingNavProps) => {
+const FloatingNav = ({ isLoading = true }: FloatingNavProps) => {
 	const [active, setActive] = useState("home");
 	const navItems = ["Home", "Chat", "Projects", "Experience", "Journey"];
 	const isMobile = window.innerWidth < 768;
@@ -30,7 +30,7 @@ const FloatingNav = ({ isLoading }: FloatingNavProps) => {
 		});
 
 		return () => observer.disconnect();
-	}, []);
+	}, [isMobile, navItems]);
 
 	if (isLoading) return null;
 
