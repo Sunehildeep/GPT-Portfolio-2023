@@ -21,6 +21,7 @@ export const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
 			initial={{ opacity: 0, x: -50 }}
 			whileInView={{ opacity: 1, x: 0 }}
 			viewport={{ once: true }}
+			transition={{ delay: index * 0.1 }}
 			className="group relative"
 		>
 			<div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-12 transition-all duration-500 ease-in-out hover:bg-white/10 hover:border-white/20">

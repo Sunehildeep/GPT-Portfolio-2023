@@ -13,27 +13,31 @@ const FloatingNav = ({ isLoading = true }: FloatingNavProps) => {
 	);
 
 	useEffect(() => {
-		const isMobile = window.innerWidth < 768;
+		const handleScroll = () => {
+			const scrollPosition = window.scrollY + window.innerHeight / 3;
 
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						setActive(entry.target.id);
+			// Find the section that's currently in view
+			for (const item of navItems) {
+				const section = document.getElementById(item.toLowerCase());
+				if (section) {
+					const { offsetTop, offsetHeight } = section;
+					if (
+						scrollPosition >= offsetTop &&
+						scrollPosition < offsetTop + offsetHeight
+					) {
+						setActive(item.toLowerCase());
+						break;
 					}
-				});
-			},
-			{ threshold: isMobile ? 0.2 : 0.4 }
-		);
-
-		navItems.forEach((item) => {
-			const element = document.getElementById(item.toLowerCase());
-			if (element) {
-				observer.observe(element);
+				}
 			}
-		});
+		};
 
-		return () => observer.disconnect();
+		// Add scroll event listener
+		window.addEventListener("scroll", handleScroll);
+		// Initial check
+		handleScroll();
+
+		return () => window.removeEventListener("scroll", handleScroll);
 	}, [navItems]);
 
 	if (isLoading) return null;

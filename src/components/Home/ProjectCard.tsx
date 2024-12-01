@@ -12,15 +12,17 @@ interface Project {
 
 interface ProjectCardProps {
 	project: Project;
+	index: number;
 }
 
-export const ProjectCard = ({ project }: ProjectCardProps) => {
+export const ProjectCard = ({ project, index }: ProjectCardProps) => {
 	return (
 		<motion.article
 			key={project.title}
 			initial={{ opacity: 0, y: 50 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true, margin: "-100px" }}
+			transition={{ delay: index * 0.1 }}
 			className="group relative"
 		>
 			<div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-12 transition-all duration-500 ease-in-out hover:bg-white/10 hover:border-white/20">

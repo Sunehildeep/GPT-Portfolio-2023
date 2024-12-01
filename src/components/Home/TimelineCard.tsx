@@ -18,6 +18,7 @@ export const TimelineCard = ({ event, index }: TimelineProps) => {
 			initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
 			whileInView={{ opacity: 1, x: 0 }}
 			viewport={{ once: true }}
+			transition={{ delay: index * 0.1 }}
 			className={`relative flex ${index % 2 === 0 ? "justify-end" : ""}`}
 		>
 			<div className={`w-full md:w-1/2 ${index % 2 === 0 ? "pr-16" : "pl-16"}`}>

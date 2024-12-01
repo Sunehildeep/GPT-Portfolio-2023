@@ -43,7 +43,7 @@ const PortfolioSite = () => {
 				<Hero />
 
 				{/* Chat Section */}
-				<section id="chat" className="py-32 px-8 lg:px-24">
+				<section id="chat" className="py-32 px-8 lg:px-24 relative">
 					<div className="max-w-7xl mx-auto">
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
@@ -66,7 +66,10 @@ const PortfolioSite = () => {
 				</section>
 
 				{/* Projects Section */}
-				<section id="projects" className="min-h-screen py-32 px-8 lg:px-24">
+				<section
+					id="projects"
+					className="min-h-screen py-32 px-8 lg:px-24 relative"
+				>
 					<div className="max-w-7xl mx-auto">
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
@@ -84,14 +87,21 @@ const PortfolioSite = () => {
 
 						<div className="space-y-32">
 							{projects.map((project, index) => (
-								<ProjectCard key={project.title} project={project} />
+								<ProjectCard
+									key={project.title}
+									index={index}
+									project={project}
+								/>
 							))}
 						</div>
 					</div>
 				</section>
 
 				{/* Experience Section */}
-				<section id="experience" className="min-h-screen py-32 px-8 lg:px-24">
+				<section
+					id="experience"
+					className="min-h-screen py-32 px-8 lg:px-24 relative"
+				>
 					<div className="max-w-7xl mx-auto">
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
