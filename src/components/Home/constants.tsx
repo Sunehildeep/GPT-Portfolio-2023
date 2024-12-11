@@ -32,6 +32,30 @@ export const projects = [
 
 export const experiences = [
 	{
+		role: "AI Engineer",
+		company: "Tandem Experiences",
+		period: "Sept 2024 - Dec 2024",
+		description: [
+			"Architected end-to-end AI dating transition system for Gen Z users, featuring multi-stage NLP and dual LLM pipeline",
+			"Built advanced NLP pipeline using VADER sentiment analysis to extract mutual interests between matched profiles",
+			"Implemented TF-IDF scoring and cosine similarity algorithms to validate profile matching accuracy",
+			"Designed parallel processing system for simultaneous entity extraction and geospatial computations",
+			"Developed dual-phase LLM system for point of interest category generation and personalized date invitations",
+			"Created intelligent venue filtering system using Google Maps API, geographical constraints, and user preferences",
+			"Built FastAPI architecture orchestrating data flow between NLP, LLM, and location services",
+			"Achieved 95% success rate across comprehensive system integration testing"
+		],
+		skills: [
+			"NLP",
+			"LLM",
+			"FastAPI",
+			"Python",
+			"VADER",
+			"Google Maps API",
+			"TF-IDF"
+		],
+	},
+	{
 		role: "Software Engineer",
 		company: "Sun Glow Window Coverings Ltd.",
 		period: "2023 - Present",
