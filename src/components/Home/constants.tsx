@@ -32,14 +32,18 @@ export const projects = [
 
 export const experiences = [
 	{
-		role: "Software Engineer",
+		role: "Lead Software Engineer",
 		company: "Sun Glow Window Coverings Ltd.",
 		period: "2023 - Present",
 		description: [
-			"Led development of a machine learning model reducing order processing time by 20% through automated classification",
-			"Architected and implemented a Next.js dealer portal, driving 30% increase in user engagement",
-			"Managed a team of developers, implementing agile methodologies that improved productivity by 25%",
-			"Pioneered company's transition to modern tech stack, including ML pipelines and cloud infrastructure",
+			"Lead and mentor a 2-member development team, implementing Agile methodologies and establishing best practices that have increased team productivity by 25%",
+			"Design and establish coding standards, code review processes, and documentation practices to enhance team collaboration and code quality",
+			"Built and deployed a Naive Bayes machine learning model for HomeDepot order processing, reducing processing time by 20% and saving 50 work hours monthly",
+			"Establish and lead technical strategy meetings, driving adoption of emerging technologies and making architectural decisions that shape the company's technical direction",
+			"Architected and developed 3 high-performance Next.js/React applications from scratch, implementing advanced optimization techniques that improved site performance by 40%",
+			"Streamlined development operations by designing CI/CD pipelines, reducing deployment time by 50% and implementing automated testing to increase code reliability",
+			"Initiate quarterly business reviews and cross-functional meetings, identifying operational bottlenecks and implementing solutions that improve workflow efficiency",
+			"Propose and implement key technical initiatives to management, including microservices architecture and AI integration, resulting in new revenue streams",
 		],
 		skills: [
 			"Machine Learning",
@@ -47,6 +51,21 @@ export const experiences = [
 			"Next.js",
 			"Team Leadership",
 			"Cloud Architecture",
+		],
+	},
+	{
+		role: "AI Engineer",
+		company: "Tandem Experiences",
+		period: "2023 - 2023",
+		description: [
+			"Architected end-to-end AI dating transition system for GenZ users, featuring multi-stage NLP and LLM pipeline",
+			"Built advanced NLP pipeline using VADER sentiment analysis to extract mutual interests between profiles",
+			"Implemented TF-IDF scoring and cosine similarity algorithms to validate profile matching accuracy",
+			"Designed parallel processing system for simultaneous entity extraction and geospatial computations",
+			"Developed dual-phase LLM system for point of interest category generation and personalized date invitations",
+			"Created intelligent venue filtering system using Google Maps API, geographical constraints, and user preferences",
+			"Built FastAPI architecture orchestrating data flow between NLP, LLM, and location services",
+			"Achieved 95% success rate across comprehensive system integration testing",
 		],
 	},
 	{
